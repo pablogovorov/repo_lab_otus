@@ -9,3 +9,4 @@ ___
 ![Picture background](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab01/clostopology.avif)
 2. Распределите адресное пространство для Underlay сети
 3. Зафиксируете в документации план работ, адресное пространство, схему сети, настройки (если перенесли на оборудование)
+___
