@@ -13,6 +13,8 @@ ___
 
 ## Выполнение:
 
+![Picture background](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab01/mytopology.jpg)
+
 :smile: :heart: :rocket:
 
 
@@ -28,7 +30,7 @@ LE3: |10.255.1.3/32 |
 
 | P2P-линки | adrss | линки |
 ------ | ------ | ----- |
-Для S1 | *10.0.0.0/25* |
+Для S1 | 10.0.0.0/25 |
 S1-L1 | 10.0.0.0/31 | S1=10.0.0.0 - L1=10.0.0.1 |
 S1–L2 | 10.0.0.2/31 | S1=10.0.0.2 - L1=10.0.0.3 |
 S1–L3 | 10.0.0.4/31 | S1=10.0.0.4 - L1=10.0.0.5 |
