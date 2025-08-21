@@ -11,7 +11,7 @@ ___
 
 ## Выполнение:
 
-##Схема сети
+## Схема сети
 ![Picture background](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab02/mytopology.jpg)
 
 
