@@ -97,7 +97,7 @@ router ospf 1
 end
 
 ```
-
+<details> 
 
 <summary> Leaf2  </summary>
 
