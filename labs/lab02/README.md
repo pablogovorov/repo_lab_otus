@@ -26,6 +26,78 @@ LE1: | 10.255.1.1/32 |
 LE2: |10.255.1.2/32 |
 LE3: |10.255.1.3/32 |
 
+##Конфигурация устройств
+
+
+<details> 
+
+<summary> Leaf1 </summary>
+
+
+```
+!
+no aaa root
+!
+no service interface inactive port-id allocation disabled
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname Leaf1
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+interface Ethernet1
+   no switchport
+   ip address 10.0.0.1/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+!
+interface Ethernet2
+   no switchport
+   ip address 10.0.0.129/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+!
+interface Ethernet3
+!
+interface Ethernet4
+!
+interface Ethernet5
+!
+interface Ethernet6
+!
+interface Ethernet7
+!
+interface Ethernet8
+!
+interface Loopback0
+   ip address 10.255.1.1/32
+!
+interface Management1
+!
+ip routing
+!
+router multicast
+   ipv4
+      software-forwarding kernel
+   !
+   ipv6
+      software-forwarding kernel
+!
+router ospf 1
+   router-id 10.255.1.1
+   max-lsa 12000
+!
+end
+
+```
+
 
 | P2P-линки | adrss | линки |
 ------ | ------ | ----- |

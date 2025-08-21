@@ -22,10 +22,14 @@ system l1
 interface Ethernet1
    no switchport
    ip address 10.0.0.1/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
 !
 interface Ethernet2
    no switchport
    ip address 10.0.0.129/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
 !
 interface Ethernet3
 !
@@ -44,7 +48,7 @@ interface Loopback0
 !
 interface Management1
 !
-no ip routing
+ip routing
 !
 router multicast
    ipv4
@@ -52,5 +56,9 @@ router multicast
    !
    ipv6
       software-forwarding kernel
+!
+router ospf 1
+   router-id 10.255.1.1
+   max-lsa 12000
 !
 end
