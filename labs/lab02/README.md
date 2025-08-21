@@ -15,7 +15,7 @@ ___
 ![Picture background](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab02/mytopology.jpg)
 
 
-##Адресное пространство
+## Адресное пространство
 
 | Loopback0 | adrss | 
 ------ | ------ |
@@ -26,7 +26,7 @@ LE1: | 10.255.1.1/32 |
 LE2: |10.255.1.2/32 |
 LE3: |10.255.1.3/32 |
 
-##Конфигурация устройств
+## Конфигурация устройств
 
 
 <details> 
