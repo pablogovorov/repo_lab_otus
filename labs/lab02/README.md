@@ -443,6 +443,6 @@ Link ID         ADV Router      Age         Seq#         Checksum Link count
 
 
 
- [Конфиги устройств](/labs/lab02/configs)
+ [Конфиги устройств.txt](/labs/lab02/configs)
 _______________________
 :metal: :lips: :heart: :boom: :rocket: 
