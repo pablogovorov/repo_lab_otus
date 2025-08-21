@@ -33,7 +33,6 @@ LE3: |10.255.1.3/32 |
 
 <summary> Leaf1 </summary>
 
-
 ```
 !
 no aaa root
@@ -97,10 +96,10 @@ router ospf 1
 end
 
 ```
+
 <details> 
 
 <summary> Leaf2  </summary>
-
 
 ```
 !
@@ -166,9 +165,9 @@ end
 
 ```
 
+<details> 
 
 <summary> Leaf3 </summary>
-
 
 ```
 !
