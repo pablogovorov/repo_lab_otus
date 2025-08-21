@@ -96,7 +96,7 @@ router ospf 1
 end
 
 ```
-
+</details>
 <details> 
 
 <summary> Leaf2  </summary>
@@ -164,7 +164,7 @@ router ospf 1
 end
 
 ```
-
+</details>
 <details> 
 
 <summary> Leaf3 </summary>
@@ -232,7 +232,8 @@ router ospf 1
 end
 
 ```
-
+</details>
+<details> 
 <summary> Spine 1 </summary>
 
 
@@ -303,7 +304,8 @@ router ospf 1
 end
 
 ```
-
+</details>
+<details> 
 <summary> Spine 2 </summary>
 
 
