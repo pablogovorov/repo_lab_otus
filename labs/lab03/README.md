@@ -512,6 +512,7 @@ IS-IS Instance: otus VRF: default
 ```
 Прохождение PING и TRACE от хостов за Leaf1 до хостов за Leaf3
 
+```
 VPCS> ping 192.168.3.130
 
 84 bytes from 192.168.3.130 icmp_seq=1 ttl=61 time=70.841 ms
