@@ -54,16 +54,17 @@ system l1
 interface Ethernet1
    no switchport
    ip address 10.0.0.1/31
-   ip ospf network point-to-point
-   ip ospf area 0.0.0.0
+   isis enable otus
 !
 interface Ethernet2
    no switchport
    ip address 10.0.0.129/31
-   ip ospf network point-to-point
-   ip ospf area 0.0.0.0
+   isis enable otus
 !
 interface Ethernet3
+   no switchport
+   ip address 192.168.1.1/24
+   isis enable otus
 !
 interface Ethernet4
 !
@@ -77,10 +78,17 @@ interface Ethernet8
 !
 interface Loopback0
    ip address 10.255.1.1/32
+   isis enable otus
 !
 interface Management1
 !
 ip routing
+!
+router isis otus
+   net 49.0001.0000.0000.0001.00
+   is-type level-2
+   !
+   address-family ipv4 unicast
 !
 router multicast
    ipv4
@@ -89,11 +97,8 @@ router multicast
    ipv6
       software-forwarding kernel
 !
-router ospf 1
-   router-id 10.255.1.1
-   max-lsa 12000
-!
 end
+
 
 ```
 </details>
@@ -122,16 +127,17 @@ system l1
 interface Ethernet1
    no switchport
    ip address 10.0.0.3/31
-   ip ospf network point-to-point
-   ip ospf area 0.0.0.0
+   isis enable otus
 !
 interface Ethernet2
    no switchport
    ip address 10.0.0.131/31
-   ip ospf network point-to-point
-   ip ospf area 0.0.0.0
+   isis enable otus
 !
 interface Ethernet3
+   no switchport
+   ip address 192.168.2.1/24
+   isis enable otus
 !
 interface Ethernet4
 !
@@ -145,10 +151,17 @@ interface Ethernet8
 !
 interface Loopback0
    ip address 10.255.1.2/32
+   isis enable otus
 !
 interface Management1
 !
 ip routing
+!
+router isis otus
+   net 49.0001.0000.0000.0002.00
+   is-type level-2
+   !
+   address-family ipv4 unicast
 !
 router multicast
    ipv4
@@ -157,11 +170,8 @@ router multicast
    ipv6
       software-forwarding kernel
 !
-router ospf 1
-   router-id 10.255.1.2
-   max-lsa 12000
-!
 end
+
 
 ```
 </details>
@@ -190,18 +200,22 @@ system l1
 interface Ethernet1
    no switchport
    ip address 10.0.0.5/31
-   ip ospf network point-to-point
-   ip ospf area 0.0.0.0
+   isis enable otus
 !
 interface Ethernet2
    no switchport
    ip address 10.0.0.133/31
-   ip ospf network point-to-point
-   ip ospf area 0.0.0.0
+   isis enable otus
 !
 interface Ethernet3
+   no switchport
+   ip address 192.168.3.1/25
+   isis enable otus
 !
 interface Ethernet4
+   no switchport
+   ip address 192.168.3.129/25
+   isis enable otus
 !
 interface Ethernet5
 !
@@ -213,10 +227,17 @@ interface Ethernet8
 !
 interface Loopback0
    ip address 10.255.1.3/32
+   isis enable otus
 !
 interface Management1
 !
 ip routing
+!
+router isis otus
+   net 49.0001.0000.0000.0003.00
+   is-type level-2
+   !
+   address-family ipv4 unicast
 !
 router multicast
    ipv4
@@ -225,11 +246,8 @@ router multicast
    ipv6
       software-forwarding kernel
 !
-router ospf 1
-   router-id 10.255.1.3
-   max-lsa 12000
-!
 end
+
 
 ```
 </details>
@@ -258,20 +276,17 @@ system l1
 interface Ethernet1
    no switchport
    ip address 10.0.0.0/31
-   ip ospf network point-to-point
-   ip ospf area 0.0.0.0
+   isis enable otus
 !
 interface Ethernet2
    no switchport
    ip address 10.0.0.2/31
-   ip ospf network point-to-point
-   ip ospf area 0.0.0.0
+   isis enable otus
 !
 interface Ethernet3
    no switchport
    ip address 10.0.0.4/31
-   ip ospf network point-to-point
-   ip ospf area 0.0.0.0
+   isis enable otus
 !
 interface Ethernet4
 !
@@ -285,10 +300,17 @@ interface Ethernet8
 !
 interface Loopback0
    ip address 10.255.0.1/32
+   isis enable otus
 !
 interface Management1
 !
 ip routing
+!
+router isis otus
+   net 49.0001.0000.0000.0010.00
+   is-type level-2
+   !
+   address-family ipv4 unicast
 !
 router multicast
    ipv4
@@ -296,10 +318,6 @@ router multicast
    !
    ipv6
       software-forwarding kernel
-!
-router ospf 1
-   router-id 10.255.0.1
-   max-lsa 12000
 !
 end
 
@@ -330,20 +348,17 @@ system l1
 interface Ethernet1
    no switchport
    ip address 10.0.0.128/31
-   ip ospf network point-to-point
-   ip ospf area 0.0.0.0
+   isis enable otus
 !
 interface Ethernet2
    no switchport
    ip address 10.0.0.130/31
-   ip ospf network point-to-point
-   ip ospf area 0.0.0.0
+   isis enable otus
 !
 interface Ethernet3
    no switchport
    ip address 10.0.0.132/31
-   ip ospf network point-to-point
-   ip ospf area 0.0.0.0
+   isis enable otus
 !
 interface Ethernet4
 !
@@ -357,10 +372,17 @@ interface Ethernet8
 !
 interface Loopback0
    ip address 10.255.0.2/32
+   isis enable otus
 !
 interface Management1
 !
 ip routing
+!
+router isis otus
+   net 49.0001.0000.0000.0020.00
+   is-type level-2
+   !
+   address-family ipv4 unicast
 !
 router multicast
    ipv4
@@ -369,11 +391,8 @@ router multicast
    ipv6
       software-forwarding kernel
 !
-router ospf 1
-   router-id 10.255.0.2
-   max-lsa 12000
-!
 end
+
 
 ```
 </details>
@@ -381,22 +400,33 @@ __________________________-
 
 Проверка IP связанности 
 ```
-Leaf1#ping 10.0.0.133
-PING 10.0.0.133 (10.0.0.133) 72(100) bytes of data.
-80 bytes from 10.0.0.133: icmp_seq=1 ttl=63 time=9.80 ms
-80 bytes from 10.0.0.133: icmp_seq=2 ttl=63 time=5.42 ms
-80 bytes from 10.0.0.133: icmp_seq=3 ttl=63 time=6.86 ms
-80 bytes from 10.0.0.133: icmp_seq=4 ttl=63 time=7.15 ms
-80 bytes from 10.0.0.133: icmp_seq=5 ttl=63 time=7.77 ms
+Leaf3#ping 10.255.1.1
+PING 10.255.1.1 (10.255.1.1) 72(100) bytes of data.
+80 bytes from 10.255.1.1: icmp_seq=1 ttl=63 time=28.9 ms
+80 bytes from 10.255.1.1: icmp_seq=2 ttl=63 time=20.3 ms
+80 bytes from 10.255.1.1: icmp_seq=3 ttl=63 time=16.0 ms
+80 bytes from 10.255.1.1: icmp_seq=4 ttl=63 time=9.50 ms
+80 bytes from 10.255.1.1: icmp_seq=5 ttl=63 time=11.8 ms
 
---- 10.0.0.133 ping statistics ---
-5 packets transmitted, 5 received, 0% packet loss, time 51ms
-rtt min/avg/max/mdev = 5.417/7.400/9.804/1.428 ms, ipg/ewma 12.803/8.610 ms
+--- 10.255.1.1 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 75ms
+rtt min/avg/max/mdev = 9.496/17.292/28.853/6.860 ms, pipe 3, ipg/ewma 18.661/22.659 ms
+
 
 ```
+Trace от Leaf3 до Leaf1
+```
+Leaf3#traceroute 10.255.1.1
+traceroute to 10.255.1.1 (10.255.1.1), 30 hops max, 60 byte packets
+ 1  10.0.0.4 (10.0.0.4)  18.503 ms  25.022 ms  29.383 ms
+ 2  10.255.1.1 (10.255.1.1)  58.665 ms  57.739 ms  62.889 ms
+
+```
+
 Проверка наличия маршрутов
+
 ```
-Leaf1#sho ip route ospf
+Leaf3#show ip route isis
 
 VRF: default
 Source Codes:
@@ -413,36 +443,59 @@ Source Codes:
        G  - gRIBI, RC - Route Cache Route,
        CL - CBF Leaked Route
 
- O        10.0.0.2/31 [110/20]
-           via 10.0.0.0, Ethernet1
- O        10.0.0.4/31 [110/20]
-           via 10.0.0.0, Ethernet1
- O        10.0.0.130/31 [110/20]
-           via 10.0.0.128, Ethernet2
- O        10.0.0.132/31 [110/20]
-           via 10.0.0.128, Ethernet2
+ I L2     10.0.0.0/31 [115/20]
+           via 10.0.0.4, Ethernet1
+ I L2     10.0.0.2/31 [115/20]
+           via 10.0.0.4, Ethernet1
+ I L2     10.0.0.128/31 [115/20]
+           via 10.0.0.132, Ethernet2
+ I L2     10.0.0.130/31 [115/20]
+           via 10.0.0.132, Ethernet2
+ I L2     10.255.0.1/32 [115/20]
+           via 10.0.0.4, Ethernet1
+ I L2     10.255.0.2/32 [115/20]
+           via 10.0.0.132, Ethernet2
+ I L2     10.255.1.1/32 [115/30]
+           via 10.0.0.4, Ethernet1
+           via 10.0.0.132, Ethernet2
+ I L2     10.255.1.2/32 [115/30]
+           via 10.0.0.4, Ethernet1
+           via 10.0.0.132, Ethernet2
+ I L2     192.168.1.0/24 [115/30]
+           via 10.0.0.4, Ethernet1
+           via 10.0.0.132, Ethernet2
+ I L2     192.168.2.0/24 [115/30]
+           via 10.0.0.4, Ethernet1
+           via 10.0.0.132, Ethernet2
+
 
 ```
 
-Проверка состояния базы OSPF
+Проверка состояния базы ISIS
+
 ```
-Leaf1#show ip ospf database
+Leaf3#show isis database
+Legend:
+H - hostname conflict
+U - node unreachable
 
-            OSPF Router with ID(10.255.1.1) (Instance ID 1) (VRF default)
-
-
-                 Router Link States (Area 0.0.0.0)
-
-Link ID         ADV Router      Age         Seq#         Checksum Link count
-10.255.0.1      10.255.0.1      1090        0x80000092   0xbdda   6
-10.255.0.2      10.255.0.2      1022        0x8000000b   0x3bdf   6
-10.255.1.2      10.255.1.2      846         0x80000007   0xcca9   4
-10.255.1.3      10.255.1.3      332         0x80000007   0xadbe   4
-10.255.1.1      10.255.1.1      998         0x80000094   0xd022   4
+IS-IS Instance: otus VRF: default
+  IS-IS Level 2 Link State Database
+    LSPID                   Seq Num  Cksum  Life Length IS  Received LSPID        Flags
+    Leaf1.00-00                  90  42395   964    133 L2  0000.0000.0001.00-00  <>
+    Leaf1.15-00                  75  29913   766     51 L2  0000.0000.0001.15-00  <>
+    Leaf1.17-00                  82  51085   553     51 L2  0000.0000.0001.17-00  <>
+    Leaf2.00-00                  79  47492   747    133 L2  0000.0000.0002.00-00  <>
+    Leaf2.14-00                  76  34246   529     51 L2  0000.0000.0002.14-00  <>
+    Leaf2.15-00                  77  60270   893     51 L2  0000.0000.0002.15-00  <>
+    Leaf3.00-00                  85  22931   880    147 L2  0000.0000.0003.00-00  <>
+    Spine1.00-00                 91  60718  1155    146 L2  0000.0000.0010.00-00  <>
+    Spine1.1a-00                 75  65352   713     51 L2  0000.0000.0010.1a-00  <>
+    Spine2.00-00                 82  15564   357    146 L2  0000.0000.0020.00-00  <>
+    Spine2.12-00                 76  63032   893     51 L2  0000.0000.0020.12-00  <>
 ```
 
 
-
- [Конфиги устройств.txt](/labs/lab02/configs)
+ [Конфиги устройств.txt](/labs/lab03/configs)
 _______________________
-:metal: :lips: :heart: :boom: :rocket: 
+:fire: :star2: :alien: :boom: :metal: 
