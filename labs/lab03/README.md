@@ -494,6 +494,42 @@ IS-IS Instance: otus VRF: default
     Spine2.00-00                 82  15564   357    146 L2  0000.0000.0020.00-00  <>
     Spine2.12-00                 76  63032   893     51 L2  0000.0000.0020.12-00  <>
 ```
+ISIS Network Topology 
+
+```
+Leaf3#show isis network topology
+
+IS-IS Instance: otus VRF: default
+  IS-IS paths to level-2 routers
+    System Id        Metric   IA Metric Next-Hop         Interface                SNPA
+    Leaf1            20       0         Spine1           Ethernet1                50:0:0:15:f4:e8
+                                        Spine2           Ethernet2                50:0:0:72:8b:31
+    Leaf2            20       0         Spine1           Ethernet1                50:0:0:15:f4:e8
+                                        Spine2           Ethernet2                50:0:0:72:8b:31
+    Spine1           10       0         Spine1           Ethernet1                50:0:0:15:f4:e8
+    Spine2           10       0         Spine2           Ethernet2                50:0:0:72:8b:31
+
+```
+Прохождение PING и TRACE от хостов за Leaf1 до хостов за Leaf3
+
+VPCS> ping 192.168.3.130
+
+84 bytes from 192.168.3.130 icmp_seq=1 ttl=61 time=70.841 ms
+84 bytes from 192.168.3.130 icmp_seq=2 ttl=61 time=22.552 ms
+84 bytes from 192.168.3.130 icmp_seq=3 ttl=61 time=21.942 ms
+84 bytes from 192.168.3.130 icmp_seq=4 ttl=61 time=22.253 ms
+84 bytes from 192.168.3.130 icmp_seq=5 ttl=61 time=27.817 ms
+
+VPCS> trace 192.168.3.130 -P 6
+trace to 192.168.3.130, 8 hops max (TCP), press Ctrl+C to stop
+ 1   192.168.1.1   6.823 ms  4.068 ms  3.053 ms
+ 2   10.0.0.0   9.604 ms  7.852 ms  8.797 ms
+ 3   10.0.0.5   15.007 ms  12.332 ms  15.059 ms
+ 4   192.168.3.130   18.962 ms  18.218 ms  28.355 ms
+
+
+```
+
 
 
  [Конфиги устройств.txt](/labs/lab03/configs)
