@@ -22,20 +22,17 @@ system l1
 interface Ethernet1
    no switchport
    ip address 10.0.0.0/31
-   ip ospf network point-to-point
-   ip ospf area 0.0.0.0
+   isis enable otus
 !
 interface Ethernet2
    no switchport
    ip address 10.0.0.2/31
-   ip ospf network point-to-point
-   ip ospf area 0.0.0.0
+   isis enable otus
 !
 interface Ethernet3
    no switchport
    ip address 10.0.0.4/31
-   ip ospf network point-to-point
-   ip ospf area 0.0.0.0
+   isis enable otus
 !
 interface Ethernet4
 !
@@ -49,10 +46,17 @@ interface Ethernet8
 !
 interface Loopback0
    ip address 10.255.0.1/32
+   isis enable otus
 !
 interface Management1
 !
 ip routing
+!
+router isis otus
+   net 49.0001.0000.0000.0010.00
+   is-type level-2
+   !
+   address-family ipv4 unicast
 !
 router multicast
    ipv4
@@ -60,9 +64,5 @@ router multicast
    !
    ipv6
       software-forwarding kernel
-!
-router ospf 1
-   router-id 10.255.0.1
-   max-lsa 12000
 !
 end
