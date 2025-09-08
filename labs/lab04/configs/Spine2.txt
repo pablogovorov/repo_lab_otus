@@ -1,0 +1,68 @@
+! Command: show running-config
+! device: Spine2 (vEOS-lab, EOS-4.33.1F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+no aaa root
+!
+no service interface inactive port-id allocation disabled
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname Spine2
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+interface Ethernet1
+   no switchport
+   ip address 10.0.0.128/31
+   isis enable otus
+!
+interface Ethernet2
+   no switchport
+   ip address 10.0.0.130/31
+   isis enable otus
+!
+interface Ethernet3
+   no switchport
+   ip address 10.0.0.132/31
+   isis enable otus
+!
+interface Ethernet4
+!
+interface Ethernet5
+!
+interface Ethernet6
+!
+interface Ethernet7
+!
+interface Ethernet8
+!
+interface Loopback0
+   ip address 10.255.0.2/32
+   isis enable otus
+!
+interface Management1
+!
+ip routing
+!
+router isis otus
+   net 49.0001.0000.0000.0020.00
+   is-type level-2
+   !
+   address-family ipv4 unicast
+!
+router multicast
+   ipv4
+      software-forwarding kernel
+   !
+   ipv6
+      software-forwarding kernel
+!
+end
