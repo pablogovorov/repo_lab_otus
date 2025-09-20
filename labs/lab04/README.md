@@ -492,13 +492,6 @@ Source Codes:
 Вывод BGP Detail
 
 ```
-Leaf1#show ip bgp detail ?
-  vrf   VRF name
-  >     Redirect output to URL
-  >>    Append redirected output to URL
-  |     Command output pipe filters
-  <cr>
-
 Leaf1#show ip bgp detail
 BGP routing table information for VRF default
 Router identifier 10.255.1.1, local AS number 65500
