@@ -433,33 +433,33 @@ end
 
 Проверка IP связанности 
 ```
-Leaf3#ping 10.255.1.1
-PING 10.255.1.1 (10.255.1.1) 72(100) bytes of data.
-80 bytes from 10.255.1.1: icmp_seq=1 ttl=63 time=28.9 ms
-80 bytes from 10.255.1.1: icmp_seq=2 ttl=63 time=20.3 ms
-80 bytes from 10.255.1.1: icmp_seq=3 ttl=63 time=16.0 ms
-80 bytes from 10.255.1.1: icmp_seq=4 ttl=63 time=9.50 ms
-80 bytes from 10.255.1.1: icmp_seq=5 ttl=63 time=11.8 ms
+Leaf1#ping 10.255.1.3 source loopback 0
+PING 10.255.1.3 (10.255.1.3) from 10.255.1.1 : 72(100) bytes of data.
+80 bytes from 10.255.1.3: icmp_seq=1 ttl=63 time=26.2 ms
+80 bytes from 10.255.1.3: icmp_seq=2 ttl=63 time=19.7 ms
+80 bytes from 10.255.1.3: icmp_seq=3 ttl=63 time=26.9 ms
+80 bytes from 10.255.1.3: icmp_seq=4 ttl=63 time=7.37 ms
+80 bytes from 10.255.1.3: icmp_seq=5 ttl=63 time=14.5 ms
 
---- 10.255.1.1 ping statistics ---
-5 packets transmitted, 5 received, 0% packet loss, time 75ms
-rtt min/avg/max/mdev = 9.496/17.292/28.853/6.860 ms, pipe 3, ipg/ewma 18.661/22.659 ms
+--- 10.255.1.3 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 79ms
+rtt min/avg/max/mdev = 7.366/18.931/26.945/7.374 ms, pipe 3, ipg/ewma 19.863/22.216 ms
 
 
 ```
-Trace от Leaf3 до Leaf1
+Trace от Leaf1 до Leaf3
 ```
-Leaf3#traceroute 10.255.1.1
-traceroute to 10.255.1.1 (10.255.1.1), 30 hops max, 60 byte packets
- 1  10.0.0.4 (10.0.0.4)  18.503 ms  25.022 ms  29.383 ms
- 2  10.255.1.1 (10.255.1.1)  58.665 ms  57.739 ms  62.889 ms
+Leaf1#traceroute 10.255.1.3 source loopback 0
+traceroute to 10.255.1.3 (10.255.1.3), 30 hops max, 60 byte packets
+ 1  10.0.0.128 (10.0.0.128)  13.981 ms  24.185 ms  24.782 ms
+ 2  10.255.1.3 (10.255.1.3)  29.267 ms  36.954 ms  58.458 ms
 
 ```
 
 Проверка наличия маршрутов
 
 ```
-Leaf3#show ip route isis
+Leaf1#show ip route bgp
 
 VRF: default
 Source Codes:
@@ -476,56 +476,106 @@ Source Codes:
        G  - gRIBI, RC - Route Cache Route,
        CL - CBF Leaked Route
 
- I L2     10.0.0.0/31 [115/20]
-           via 10.0.0.4, Ethernet1
- I L2     10.0.0.2/31 [115/20]
-           via 10.0.0.4, Ethernet1
- I L2     10.0.0.128/31 [115/20]
-           via 10.0.0.132, Ethernet2
- I L2     10.0.0.130/31 [115/20]
-           via 10.0.0.132, Ethernet2
- I L2     10.255.0.1/32 [115/20]
-           via 10.0.0.4, Ethernet1
- I L2     10.255.0.2/32 [115/20]
-           via 10.0.0.132, Ethernet2
- I L2     10.255.1.1/32 [115/30]
-           via 10.0.0.4, Ethernet1
-           via 10.0.0.132, Ethernet2
- I L2     10.255.1.2/32 [115/30]
-           via 10.0.0.4, Ethernet1
-           via 10.0.0.132, Ethernet2
- I L2     192.168.1.0/24 [115/30]
-           via 10.0.0.4, Ethernet1
-           via 10.0.0.132, Ethernet2
- I L2     192.168.2.0/24 [115/30]
-           via 10.0.0.4, Ethernet1
-           via 10.0.0.132, Ethernet2
-
+ B I      10.255.0.1/32 [200/0]
+           via 10.0.0.0, Ethernet1
+ B I      10.255.0.2/32 [200/0]
+           via 10.0.0.128, Ethernet2
+ B I      10.255.1.2/32 [200/0]
+           via 10.0.0.0, Ethernet1
+           via 10.0.0.128, Ethernet2
+ B I      10.255.1.3/32 [200/0]
+           via 10.0.0.0, Ethernet1
+           via 10.0.0.128, Ethernet2
+ B I      192.168.3.128/25 [200/0]
+           via 10.0.0.0, Ethernet1
+           via 10.0.0.128, Ethernet2
 
 ```
 
-Проверка состояния базы ISIS
+Вывод BGP Detail
 
 ```
-Leaf3#show isis database
-Legend:
-H - hostname conflict
-U - node unreachable
+Leaf1#show ip bgp detail ?
+  vrf   VRF name
+  >     Redirect output to URL
+  >>    Append redirected output to URL
+  |     Command output pipe filters
+  <cr>
 
-IS-IS Instance: otus VRF: default
-  IS-IS Level 2 Link State Database
-    LSPID                   Seq Num  Cksum  Life Length IS  Received LSPID        Flags
-    Leaf1.00-00                  90  42395   964    133 L2  0000.0000.0001.00-00  <>
-    Leaf1.15-00                  75  29913   766     51 L2  0000.0000.0001.15-00  <>
-    Leaf1.17-00                  82  51085   553     51 L2  0000.0000.0001.17-00  <>
-    Leaf2.00-00                  79  47492   747    133 L2  0000.0000.0002.00-00  <>
-    Leaf2.14-00                  76  34246   529     51 L2  0000.0000.0002.14-00  <>
-    Leaf2.15-00                  77  60270   893     51 L2  0000.0000.0002.15-00  <>
-    Leaf3.00-00                  85  22931   880    147 L2  0000.0000.0003.00-00  <>
-    Spine1.00-00                 91  60718  1155    146 L2  0000.0000.0010.00-00  <>
-    Spine1.1a-00                 75  65352   713     51 L2  0000.0000.0010.1a-00  <>
-    Spine2.00-00                 82  15564   357    146 L2  0000.0000.0020.00-00  <>
-    Spine2.12-00                 76  63032   893     51 L2  0000.0000.0020.12-00  <>
+Leaf1#show ip bgp detail
+BGP routing table information for VRF default
+Router identifier 10.255.1.1, local AS number 65500
+BGP routing table entry for 10.255.0.1/32
+ Paths: 1 available
+  Local
+    10.0.0.0 from 10.0.0.0 (10.255.0.1)
+      Origin IGP, metric 0, localpref 100, IGP metric 0, weight 0, tag 0
+      Received 8d17h ago, valid, internal, best
+      Rx SAFI: Unicast
+BGP routing table entry for 10.255.0.2/32
+ Paths: 1 available
+  Local
+    10.0.0.128 from 10.0.0.128 (10.255.0.2)
+      Origin IGP, metric 0, localpref 100, IGP metric 0, weight 0, tag 0
+      Received 8d17h ago, valid, internal, best
+      Rx SAFI: Unicast
+BGP routing table entry for 10.255.1.1/32
+ Paths: 1 available
+  Local
+    - from - (10.255.1.1)
+      Origin IGP, metric -, localpref -, IGP metric -, weight 0, tag 0
+      Received 8d17h ago, valid, local, best, redistributed (Connected)
+      Rx SAFI: Unicast
+BGP routing table entry for 10.255.1.2/32
+ Paths: 2 available
+  Local
+    10.0.0.128 from 10.0.0.128 (10.255.0.2)
+      Origin IGP, metric 0, localpref 100, IGP metric 0, weight 0, tag 0
+      Received 8d17h ago, valid, internal, ECMP head, ECMP, best, ECMP contributor
+      Originator: 10.255.1.2, Cluster list: 10.255.0.2
+      Rx SAFI: Unicast
+  Local
+    10.0.0.0 from 10.0.0.0 (10.255.0.1)
+      Origin IGP, metric 0, localpref 100, IGP metric 0, weight 0, tag 0
+      Received 8d17h ago, valid, internal, ECMP, ECMP contributor
+      Originator: 10.255.1.2, Cluster list: 10.255.0.1
+      Rx SAFI: Unicast
+BGP routing table entry for 10.255.1.3/32
+ Paths: 2 available
+  Local
+    10.0.0.128 from 10.0.0.128 (10.255.0.2)
+      Origin IGP, metric 0, localpref 100, IGP metric 0, weight 0, tag 0
+      Received 8d17h ago, valid, internal, ECMP head, ECMP, best, ECMP contributor
+      Originator: 10.255.1.3, Cluster list: 10.255.0.2
+      Rx SAFI: Unicast
+  Local
+    10.0.0.0 from 10.0.0.0 (10.255.0.1)
+      Origin IGP, metric 0, localpref 100, IGP metric 0, weight 0, tag 0
+      Received 8d17h ago, valid, internal, ECMP, ECMP contributor
+      Originator: 10.255.1.3, Cluster list: 10.255.0.1
+      Rx SAFI: Unicast
+BGP routing table entry for 192.168.1.0/24
+ Paths: 1 available
+  Local
+    - from - (10.255.1.1)
+      Origin IGP, metric -, localpref -, IGP metric -, weight 0, tag 0
+      Received 8d17h ago, valid, local, best, redistributed (Connected)
+      Rx SAFI: Unicast
+BGP routing table entry for 192.168.3.128/25
+ Paths: 2 available
+  Local
+    10.0.0.0 from 10.0.0.0 (10.255.0.1)
+      Origin IGP, metric 0, localpref 100, IGP metric 0, weight 0, tag 0
+      Received 8d17h ago, valid, internal, ECMP head, ECMP, best, ECMP contributor
+      Originator: 10.255.1.3, Cluster list: 10.255.0.1
+      Rx SAFI: Unicast
+  Local
+    10.0.0.128 from 10.0.0.128 (10.255.0.2)
+      Origin IGP, metric 0, localpref 100, IGP metric 0, weight 0, tag 0
+      Received 8d17h ago, valid, internal, ECMP, ECMP contributor
+      Originator: 10.255.1.3, Cluster list: 10.255.0.2
+      Rx SAFI: Unicast
+
 ```
 ISIS Network Topology 
 
@@ -566,6 +616,6 @@ trace to 192.168.3.130, 8 hops max (TCP), press Ctrl+C to stop
 
 
 
- [Конфиги устройств.txt](/labs/lab03/configs)
+ [Конфиги устройств.txt](/labs/lab04/configs)
 _______________________
 :fire: :star2: :alien: :boom: :metal: 
