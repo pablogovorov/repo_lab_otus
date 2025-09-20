@@ -20,19 +20,16 @@ system l1
    unsupported error-correction action error
 !
 interface Ethernet1
+   mtu 9194
    no switchport
    ip address 10.0.0.3/31
-   isis enable otus
 !
 interface Ethernet2
+   mtu 9194
    no switchport
    ip address 10.0.0.131/31
-   isis enable otus
 !
 interface Ethernet3
-   no switchport
-   ip address 192.168.2.1/24
-   isis enable otus
 !
 interface Ethernet4
 !
@@ -46,17 +43,19 @@ interface Ethernet8
 !
 interface Loopback0
    ip address 10.255.1.2/32
-   isis enable otus
 !
 interface Management1
 !
 ip routing
 !
-router isis otus
-   net 49.0001.0000.0000.0002.00
-   is-type level-2
-   !
-   address-family ipv4 unicast
+router bgp 65500
+   router-id 10.255.1.2
+   neighbor UNDERLAY peer group
+   neighbor UNDERLAY remote-as 65500
+   neighbor UNDERLAY bfd
+   neighbor 10.0.0.2 peer group UNDERLAY
+   neighbor 10.0.0.130 peer group UNDERLAY
+   network 10.255.1.2/32
 !
 router multicast
    ipv4

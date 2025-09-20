@@ -249,12 +249,10 @@ ip routing
 router bgp 65500
    router-id 10.255.1.3
    neighbor UNDERLAY peer group
+   neighbor UNDERLAY remote-as 65500
    neighbor UNDERLAY bfd
-   neighbor UNDERPLAY peer group
-   neighbor UNDERPLAY remote-as 65500
-   neighbor UNDERPLAY bfd
-   neighbor 10.0.0.4 peer group UNDERPLAY
-   neighbor 10.0.0.132 peer group UNDERPLAY
+   neighbor 10.0.0.4 peer group UNDERLAY
+   neighbor 10.0.0.132 peer group UNDERLAY
    network 10.255.1.3/32
    network 192.168.3.128/25
 !
@@ -266,7 +264,6 @@ router multicast
       software-forwarding kernel
 !
 end
-
 
 
 ```
@@ -577,39 +574,46 @@ BGP routing table entry for 192.168.3.128/25
       Rx SAFI: Unicast
 
 ```
-ISIS Network Topology 
+Префиксы от Spine2
 
 ```
-Leaf3#show isis network topology
+Leaf1#show ip bgp neighbors 10.0.0.128 received-routes
+BGP routing table information for VRF default
+Router identifier 10.255.1.1, local AS number 65500
+Route status codes: s - suppressed contributor, * - valid, > - active, E - ECMP head, e - ECMP
+                    S - Stale, c - Contributing to ECMP, b - backup, L - labeled-unicast
+                    % - Pending best path selection
+Origin codes: i - IGP, e - EGP, ? - incomplete
+RPKI Origin Validation codes: V - valid, I - invalid, U - unknown
+AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
 
-IS-IS Instance: otus VRF: default
-  IS-IS paths to level-2 routers
-    System Id        Metric   IA Metric Next-Hop         Interface                SNPA
-    Leaf1            20       0         Spine1           Ethernet1                50:0:0:15:f4:e8
-                                        Spine2           Ethernet2                50:0:0:72:8b:31
-    Leaf2            20       0         Spine1           Ethernet1                50:0:0:15:f4:e8
-                                        Spine2           Ethernet2                50:0:0:72:8b:31
-    Spine1           10       0         Spine1           Ethernet1                50:0:0:15:f4:e8
-    Spine2           10       0         Spine2           Ethernet2                50:0:0:72:8b:31
+          Network                Next Hop              Metric  AIGP       LocPref Weight  Path
+ * >      10.255.0.2/32          10.0.0.128            -       -          100     -       i
+ * >Ec    10.255.1.2/32          10.0.0.128            -       -          100     -       i Or-ID: 10.255.1.2 C-LST: 10.255.0.2
+ * >Ec    10.255.1.3/32          10.0.0.128            -       -          100     -       i Or-ID: 10.255.1.3 C-LST: 10.255.0.2
+ * >Ec    192.168.3.128/25       10.0.0.128            -       -          100     -       i Or-ID: 10.255.1.3 C-LST: 10.255.0.2
+
 
 ```
-Прохождение PING и TRACE от хостов за Leaf1 до хостов за Leaf3
+Прохождение PING и TRACE от хостов за Leaf3 до хостов за Leaf1
 
 ```
-VPCS> ping 192.168.3.130
+VPCS> ping 192.168.1.2
 
-84 bytes from 192.168.3.130 icmp_seq=1 ttl=61 time=70.841 ms
-84 bytes from 192.168.3.130 icmp_seq=2 ttl=61 time=22.552 ms
-84 bytes from 192.168.3.130 icmp_seq=3 ttl=61 time=21.942 ms
-84 bytes from 192.168.3.130 icmp_seq=4 ttl=61 time=22.253 ms
-84 bytes from 192.168.3.130 icmp_seq=5 ttl=61 time=27.817 ms
+84 bytes from 192.168.1.2 icmp_seq=1 ttl=61 time=11.965 ms
+84 bytes from 192.168.1.2 icmp_seq=2 ttl=61 time=17.757 ms
+84 bytes from 192.168.1.2 icmp_seq=3 ttl=61 time=38.127 ms
+84 bytes from 192.168.1.2 icmp_seq=4 ttl=61 time=22.907 ms
+84 bytes from 192.168.1.2 icmp_seq=5 ttl=61 time=26.081 ms
 
-VPCS> trace 192.168.3.130 -P 6
-trace to 192.168.3.130, 8 hops max (TCP), press Ctrl+C to stop
- 1   192.168.1.1   6.823 ms  4.068 ms  3.053 ms
- 2   10.0.0.0   9.604 ms  7.852 ms  8.797 ms
- 3   10.0.0.5   15.007 ms  12.332 ms  15.059 ms
- 4   192.168.3.130   18.962 ms  18.218 ms  28.355 ms
+
+VPCS> trace 192.168.1.2 -P 6
+trace to 192.168.1.2, 8 hops max (TCP), press Ctrl+C to stop
+ 1   192.168.3.129   5.335 ms  3.262 ms  6.279 ms
+ 2   10.0.0.4   11.140 ms  8.874 ms  15.980 ms
+ 3   10.0.0.1   25.868 ms  15.004 ms  21.141 ms
+ 4   192.168.1.2   21.370 ms  19.441 ms  13.565 ms
+
 
 
 ```
