@@ -1,18 +1,18 @@
-## Лабораторная работа №3 по теме: "Underlay. ISIS"
+## Лабораторная работа №4 по теме: "Underlay. BGP"
 ___
 ### Цель:
-Настроить ISIS для Underlay сети.
+Настроить BGP для Underlay сети.
 
 ### Задание:
-1. Настроите ISIS в Underlay сети, для IP связанности между всеми сетевыми устройствами.
+1. Настроите BGP в Underlay сети, для IP связанности между всеми сетевыми устройствами.
 2. Зафиксируете в документации - план работы, адресное пространство, схему сети, конфигурацию устройств
-3. Убедитесь в наличии IP связанности между устройствами в ISIS домене
+3. Убедитесь в наличии IP связанности между устройствами в BGP домене
 ___
 
 ## Выполнение:
 
 ## Схема сети
-![Picture background](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab03/mytopology.jpg)
+![Picture background](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab04/mytopology.jpg)
 
 
 ## Адресное пространство
@@ -66,19 +66,18 @@ system l1
    unsupported error-correction action error
 !
 interface Ethernet1
+   mtu 9194
    no switchport
    ip address 10.0.0.1/31
-   isis enable otus
 !
 interface Ethernet2
+   mtu 9194
    no switchport
    ip address 10.0.0.129/31
-   isis enable otus
 !
 interface Ethernet3
    no switchport
    ip address 192.168.1.1/24
-   isis enable otus
 !
 interface Ethernet4
 !
@@ -92,17 +91,21 @@ interface Ethernet8
 !
 interface Loopback0
    ip address 10.255.1.1/32
-   isis enable otus
 !
 interface Management1
 !
 ip routing
 !
-router isis otus
-   net 49.0001.0000.0000.0001.00
-   is-type level-2
-   !
-   address-family ipv4 unicast
+router bgp 65500
+   router-id 10.255.1.1
+   maximum-paths 2 ecmp 2
+   neighbor UNDERLAY peer group
+   neighbor UNDERLAY remote-as 65500
+   neighbor UNDERLAY bfd
+   neighbor 10.0.0.0 peer group UNDERLAY
+   neighbor 10.0.0.128 peer group UNDERLAY
+   network 10.255.1.1/32
+   network 192.168.1.0/24
 !
 router multicast
    ipv4
@@ -139,19 +142,16 @@ system l1
    unsupported error-correction action error
 !
 interface Ethernet1
+   mtu 9194
    no switchport
    ip address 10.0.0.3/31
-   isis enable otus
 !
 interface Ethernet2
+   mtu 9194
    no switchport
    ip address 10.0.0.131/31
-   isis enable otus
 !
 interface Ethernet3
-   no switchport
-   ip address 192.168.2.1/24
-   isis enable otus
 !
 interface Ethernet4
 !
@@ -165,17 +165,19 @@ interface Ethernet8
 !
 interface Loopback0
    ip address 10.255.1.2/32
-   isis enable otus
 !
 interface Management1
 !
 ip routing
 !
-router isis otus
-   net 49.0001.0000.0000.0002.00
-   is-type level-2
-   !
-   address-family ipv4 unicast
+router bgp 65500
+   router-id 10.255.1.2
+   neighbor UNDERLAY peer group
+   neighbor UNDERLAY remote-as 65500
+   neighbor UNDERLAY bfd
+   neighbor 10.0.0.2 peer group UNDERLAY
+   neighbor 10.0.0.130 peer group UNDERLAY
+   network 10.255.1.2/32
 !
 router multicast
    ipv4
@@ -212,24 +214,22 @@ system l1
    unsupported error-correction action error
 !
 interface Ethernet1
+   mtu 9194
    no switchport
    ip address 10.0.0.5/31
-   isis enable otus
 !
 interface Ethernet2
+   mtu 9194
    no switchport
    ip address 10.0.0.133/31
-   isis enable otus
 !
 interface Ethernet3
    no switchport
    ip address 192.168.3.1/25
-   isis enable otus
 !
 interface Ethernet4
    no switchport
    ip address 192.168.3.129/25
-   isis enable otus
 !
 interface Ethernet5
 !
@@ -241,17 +241,22 @@ interface Ethernet8
 !
 interface Loopback0
    ip address 10.255.1.3/32
-   isis enable otus
 !
 interface Management1
 !
 ip routing
 !
-router isis otus
-   net 49.0001.0000.0000.0003.00
-   is-type level-2
-   !
-   address-family ipv4 unicast
+router bgp 65500
+   router-id 10.255.1.3
+   neighbor UNDERLAY peer group
+   neighbor UNDERLAY bfd
+   neighbor UNDERPLAY peer group
+   neighbor UNDERPLAY remote-as 65500
+   neighbor UNDERPLAY bfd
+   neighbor 10.0.0.4 peer group UNDERPLAY
+   neighbor 10.0.0.132 peer group UNDERPLAY
+   network 10.255.1.3/32
+   network 192.168.3.128/25
 !
 router multicast
    ipv4
@@ -261,6 +266,7 @@ router multicast
       software-forwarding kernel
 !
 end
+
 
 
 ```
@@ -288,19 +294,19 @@ system l1
    unsupported error-correction action error
 !
 interface Ethernet1
+   mtu 9194
    no switchport
    ip address 10.0.0.0/31
-   isis enable otus
 !
 interface Ethernet2
+   mtu 9194
    no switchport
    ip address 10.0.0.2/31
-   isis enable otus
 !
 interface Ethernet3
+   mtu 9194
    no switchport
    ip address 10.0.0.4/31
-   isis enable otus
 !
 interface Ethernet4
 !
@@ -314,17 +320,22 @@ interface Ethernet8
 !
 interface Loopback0
    ip address 10.255.0.1/32
-   isis enable otus
 !
 interface Management1
 !
 ip routing
 !
-router isis otus
-   net 49.0001.0000.0000.0010.00
-   is-type level-2
-   !
-   address-family ipv4 unicast
+router bgp 65500
+   router-id 10.255.0.1
+   neighbor UNDERLAY peer group
+   neighbor UNDERLAY remote-as 65500
+   neighbor UNDERLAY next-hop-self
+   neighbor UNDERLAY bfd
+   neighbor UNDERLAY route-reflector-client
+   neighbor 10.0.0.1 peer group UNDERLAY
+   neighbor 10.0.0.3 peer group UNDERLAY
+   neighbor 10.0.0.5 peer group UNDERLAY
+   network 10.255.0.1/32
 !
 router multicast
    ipv4
@@ -334,6 +345,7 @@ router multicast
       software-forwarding kernel
 !
 end
+
 
 ```
 </details>
@@ -360,19 +372,19 @@ system l1
    unsupported error-correction action error
 !
 interface Ethernet1
+   mtu 9194
    no switchport
    ip address 10.0.0.128/31
-   isis enable otus
 !
 interface Ethernet2
+   mtu 9194
    no switchport
    ip address 10.0.0.130/31
-   isis enable otus
 !
 interface Ethernet3
+   mtu 9194
    no switchport
    ip address 10.0.0.132/31
-   isis enable otus
 !
 interface Ethernet4
 !
@@ -386,17 +398,22 @@ interface Ethernet8
 !
 interface Loopback0
    ip address 10.255.0.2/32
-   isis enable otus
 !
 interface Management1
 !
 ip routing
 !
-router isis otus
-   net 49.0001.0000.0000.0020.00
-   is-type level-2
-   !
-   address-family ipv4 unicast
+router bgp 65500
+   router-id 10.255.0.2
+   neighbor UNDERLAY peer group
+   neighbor UNDERLAY remote-as 65500
+   neighbor UNDERLAY next-hop-self
+   neighbor UNDERLAY bfd
+   neighbor UNDERLAY route-reflector-client
+   neighbor 10.0.0.129 peer group UNDERLAY
+   neighbor 10.0.0.131 peer group UNDERLAY
+   neighbor 10.0.0.133 peer group UNDERLAY
+   network 10.255.0.2/32
 !
 router multicast
    ipv4
@@ -406,6 +423,7 @@ router multicast
       software-forwarding kernel
 !
 end
+
 
 
 ```
