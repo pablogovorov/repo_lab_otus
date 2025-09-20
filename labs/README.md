@@ -1,4 +1,5 @@
 - Лабы Домашка Otus
     - [Лаба №1](/labs/lab01)
-    - [Лаба №2](/labs/lab02)
-    - [Лаба №3](/labs/lab03)
+    - [Лаба №2 OSPF](/labs/lab02)
+    - [Лаба №3 ISIS](/labs/lab03)
+    - [Лаба №4 BGP](/labs/lab04)
