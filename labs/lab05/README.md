@@ -1,21 +1,28 @@
-## Лабораторная работа №4 по теме: "Underlay. BGP"
+## Лабораторная работа №5 по теме: "VxLAN. EVPN L2"
 ___
 ### Цель:
-Настроить BGP для Underlay сети.
+Настроить Overlay на основе VxLAN EVPN для L2 связанности между клиентами.
 
 ### Задание:
-1. Настроите BGP в Underlay сети, для IP связанности между всеми сетевыми устройствами.
-2. Зафиксируете в документации - план работы, адресное пространство, схему сети, конфигурацию устройств
-3. Убедитесь в наличии IP связанности между устройствами в BGP домене
+1. Настроите BGP peering между Leaf и Spine в AF l2vpn evpn.
+2. Настроите связанность между клиентами в первой зоне и убедитесь в её наличии
+3. Зафиксируете в документации - план работы, адресное пространство, схему сети, конфигурацию устройств
 ___
 
 ## Выполнение:
 
 ## Схема сети
-![Picture background](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab04/mytopology.jpg)
+![Picture background](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab05/mytopology.jpg)
 
 
-## Адресное пространство
+## BGP peering между Leaf и Spine в AF l2vpn evpn
+
+Leaf1#show bgp evpn summary
+![Picture background](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab05/bgp_peer1.jpg)
+
+Spine1#show bgp evpn summary
+![Picture background](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab05/bgp_peer2.jpg)
+
 
 | Loopback0 | adrss | 
 ------ | ------ |
