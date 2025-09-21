@@ -615,43 +615,6 @@ VPCS> ping 192.168.1.3
 
 ```
 
-Проверка наличия маршрутов
-
-```
-Leaf1#show ip route bgp
-
-VRF: default
-Source Codes:
-       C - connected, S - static, K - kernel,
-       O - OSPF, IA - OSPF inter area, E1 - OSPF external type 1,
-       E2 - OSPF external type 2, N1 - OSPF NSSA external type 1,
-       N2 - OSPF NSSA external type2, B - Other BGP Routes,
-       B I - iBGP, B E - eBGP, R - RIP, I L1 - IS-IS level 1,
-       I L2 - IS-IS level 2, O3 - OSPFv3, A B - BGP Aggregate,
-       A O - OSPF Summary, NG - Nexthop Group Static Route,
-       V - VXLAN Control Service, M - Martian,
-       DH - DHCP client installed default route,
-       DP - Dynamic Policy Route, L - VRF Leaked,
-       G  - gRIBI, RC - Route Cache Route,
-       CL - CBF Leaked Route
-
- B I      10.255.0.1/32 [200/0]
-           via 10.0.0.0, Ethernet1
- B I      10.255.0.2/32 [200/0]
-           via 10.0.0.128, Ethernet2
- B I      10.255.1.2/32 [200/0]
-           via 10.0.0.0, Ethernet1
-           via 10.0.0.128, Ethernet2
- B I      10.255.1.3/32 [200/0]
-           via 10.0.0.0, Ethernet1
-           via 10.0.0.128, Ethernet2
- B I      192.168.3.128/25 [200/0]
-           via 10.0.0.0, Ethernet1
-           via 10.0.0.128, Ethernet2
-
-```
-
-
 
 ```
 
