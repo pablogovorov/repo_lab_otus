@@ -46,6 +46,53 @@ Neighbor            AS Session State AFI/SAFI                AFI/SAFI State   NL
 10.255.1.3       65500 Established   L2VPN EVPN              Negotiated              2          2
 ```
 
+
+## Наличие route-type 2 и 3 префиксов
+```
+Leaf1#show bgp evpn
+BGP routing table information for VRF default
+Router identifier 10.255.1.1, local AS number 65500
+Route status codes: * - valid, > - active, S - Stale, E - ECMP head, e - ECMP
+                    c - Contributing to ECMP, % - Pending best path selection
+Origin codes: i - IGP, e - EGP, ? - incomplete
+AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
+
+          Network                Next Hop              Metric  LocPref Weight  Path
+ * >      RD: 10.255.1.1:10 mac-ip 0050.7966.6803
+                                 -                     -       -       0       i
+ * >Ec    RD: 10.255.1.2:20 mac-ip 0050.7966.6807
+                                 10.255.1.2            -       100     0       i Or-ID: 10.255.1.2 C-LST: 10.255.0.1
+ *  ec    RD: 10.255.1.2:20 mac-ip 0050.7966.6807
+                                 10.255.1.2            -       100     0       i Or-ID: 10.255.1.2 C-LST: 10.255.0.2
+ * >Ec    RD: 10.255.1.3:10 mac-ip 0050.7966.6808
+                                 10.255.1.3            -       100     0       i Or-ID: 10.255.1.3 C-LST: 10.255.0.1
+ *  ec    RD: 10.255.1.3:10 mac-ip 0050.7966.6808
+                                 10.255.1.3            -       100     0       i Or-ID: 10.255.1.3 C-LST: 10.255.0.2
+ * >Ec    RD: 10.255.1.3:20 mac-ip 0050.7966.6809
+                                 10.255.1.3            -       100     0       i Or-ID: 10.255.1.3 C-LST: 10.255.0.2
+ *  ec    RD: 10.255.1.3:20 mac-ip 0050.7966.6809
+                                 10.255.1.3            -       100     0       i Or-ID: 10.255.1.3 C-LST: 10.255.0.1
+ * >      RD: 10.255.1.1:10 imet 10.255.1.1
+                                 -                     -       -       0       i
+ * >Ec    RD: 10.255.1.2:10 imet 10.255.1.2
+                                 10.255.1.2            -       100     0       i Or-ID: 10.255.1.2 C-LST: 10.255.0.2
+ *  ec    RD: 10.255.1.2:10 imet 10.255.1.2
+                                 10.255.1.2            -       100     0       i Or-ID: 10.255.1.2 C-LST: 10.255.0.1
+ * >Ec    RD: 10.255.1.2:20 imet 10.255.1.2
+                                 10.255.1.2            -       100     0       i Or-ID: 10.255.1.2 C-LST: 10.255.0.2
+ *  ec    RD: 10.255.1.2:20 imet 10.255.1.2
+                                 10.255.1.2            -       100     0       i Or-ID: 10.255.1.2 C-LST: 10.255.0.1
+ * >Ec    RD: 10.255.1.3:10 imet 10.255.1.3
+                                 10.255.1.3            -       100     0       i Or-ID: 10.255.1.3 C-LST: 10.255.0.2
+ *  ec    RD: 10.255.1.3:10 imet 10.255.1.3
+                                 10.255.1.3            -       100     0       i Or-ID: 10.255.1.3 C-LST: 10.255.0.1
+ * >Ec    RD: 10.255.1.3:20 imet 10.255.1.3
+                                 10.255.1.3            -       100     0       i Or-ID: 10.255.1.3 C-LST: 10.255.0.2
+ *  ec    RD: 10.255.1.3:20 imet 10.255.1.3
+                                 10.255.1.3            -       100     0       i Or-ID: 10.255.1.3 C-LST: 10.255.0.1
+```
+
+
 | Loopback0 | adrss | 
 ------ | ------ |
 Пул: | 10.255.0.0/20 |
