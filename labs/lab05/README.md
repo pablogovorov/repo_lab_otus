@@ -18,9 +18,11 @@ ___
 ## BGP peering между Leaf и Spine в AF l2vpn evpn
 
 Leaf1#show bgp evpn summary
+-
 ![Picture background](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab05/bgp_peer1.jpg)
 
 Spine1#show bgp evpn summary
+-
 ![Picture background](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab05/bgp_peer2.jpg)
 
 
