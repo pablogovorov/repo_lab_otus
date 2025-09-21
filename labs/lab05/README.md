@@ -118,19 +118,23 @@ system l1
    unsupported speed action error
    unsupported error-correction action error
 !
+vlan 10
+   name vlan10
+!
 interface Ethernet1
-   mtu 9194
    no switchport
    ip address 10.0.0.1/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
 !
 interface Ethernet2
-   mtu 9194
    no switchport
    ip address 10.0.0.129/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
 !
 interface Ethernet3
-   no switchport
-   ip address 192.168.1.1/24
+   switchport access vlan 10
 !
 interface Ethernet4
 !
@@ -144,21 +148,35 @@ interface Ethernet8
 !
 interface Loopback0
    ip address 10.255.1.1/32
+   ip ospf area 0.0.0.0
 !
 interface Management1
+!
+interface Vlan10
+!
+interface Vxlan1
+   vxlan source-interface Loopback0
+   vxlan udp-port 4789
+   vxlan vlan 10 vni 10010
 !
 ip routing
 !
 router bgp 65500
-   router-id 10.255.1.1
-   maximum-paths 2 ecmp 2
-   neighbor UNDERLAY peer group
-   neighbor UNDERLAY remote-as 65500
-   neighbor UNDERLAY bfd
-   neighbor 10.0.0.0 peer group UNDERLAY
-   neighbor 10.0.0.128 peer group UNDERLAY
-   network 10.255.1.1/32
-   network 192.168.1.0/24
+   neighbor 10.255.0.1 remote-as 65500
+   neighbor 10.255.0.1 update-source Loopback0
+   neighbor 10.255.0.1 send-community extended
+   neighbor 10.255.0.2 remote-as 65500
+   neighbor 10.255.0.2 update-source Loopback0
+   neighbor 10.255.0.2 send-community extended
+   !
+   vlan 10
+      rd auto
+      route-target both 65500:10010
+      redistribute learned
+   !
+   address-family evpn
+      neighbor 10.255.0.1 activate
+      neighbor 10.255.0.2 activate
 !
 router multicast
    ipv4
@@ -167,7 +185,12 @@ router multicast
    ipv6
       software-forwarding kernel
 !
+router ospf 1
+   router-id 10.255.1.1
+   max-lsa 12000
+!
 end
+
 
 
 ```
@@ -194,17 +217,26 @@ system l1
    unsupported speed action error
    unsupported error-correction action error
 !
+vlan 10
+   name vlan10
+!
+vlan 20
+   name vlan20
+!
 interface Ethernet1
-   mtu 9194
    no switchport
    ip address 10.0.0.3/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
 !
 interface Ethernet2
-   mtu 9194
    no switchport
    ip address 10.0.0.131/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
 !
 interface Ethernet3
+   switchport access vlan 20
 !
 interface Ethernet4
 !
@@ -218,19 +250,41 @@ interface Ethernet8
 !
 interface Loopback0
    ip address 10.255.1.2/32
+   ip ospf area 0.0.0.0
 !
 interface Management1
+!
+interface Vlan10
+!
+interface Vxlan1
+   vxlan source-interface Loopback0
+   vxlan udp-port 4789
+   vxlan vlan 10 vni 10010
+   vxlan vlan 20 vni 10020
 !
 ip routing
 !
 router bgp 65500
-   router-id 10.255.1.2
-   neighbor UNDERLAY peer group
-   neighbor UNDERLAY remote-as 65500
-   neighbor UNDERLAY bfd
-   neighbor 10.0.0.2 peer group UNDERLAY
-   neighbor 10.0.0.130 peer group UNDERLAY
-   network 10.255.1.2/32
+   neighbor 10.255.0.1 remote-as 65500
+   neighbor 10.255.0.1 update-source Loopback0
+   neighbor 10.255.0.1 send-community extended
+   neighbor 10.255.0.2 remote-as 65500
+   neighbor 10.255.0.2 update-source Loopback0
+   neighbor 10.255.0.2 send-community extended
+   !
+   vlan 10
+      rd auto
+      route-target both 65500:10010
+      redistribute learned
+   !
+   vlan 20
+      rd auto
+      route-target both 65500:10020
+      redistribute learned
+   !
+   address-family evpn
+      neighbor 10.255.0.1 activate
+      neighbor 10.255.0.2 activate
 !
 router multicast
    ipv4
@@ -239,8 +293,11 @@ router multicast
    ipv6
       software-forwarding kernel
 !
+router ospf 1
+   router-id 10.255.1.2
+   max-lsa 12000
+!
 end
-
 
 ```
 </details>
@@ -266,23 +323,29 @@ system l1
    unsupported speed action error
    unsupported error-correction action error
 !
+vlan 10
+   name vlan10
+!
+vlan 20
+   name vlan20
+!
 interface Ethernet1
-   mtu 9194
    no switchport
    ip address 10.0.0.5/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
 !
 interface Ethernet2
-   mtu 9194
    no switchport
    ip address 10.0.0.133/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
 !
 interface Ethernet3
-   no switchport
-   ip address 192.168.3.1/25
+   switchport access vlan 10
 !
 interface Ethernet4
-   no switchport
-   ip address 192.168.3.129/25
+   switchport access vlan 20
 !
 interface Ethernet5
 !
@@ -294,20 +357,39 @@ interface Ethernet8
 !
 interface Loopback0
    ip address 10.255.1.3/32
+   ip ospf area 0.0.0.0
 !
 interface Management1
+!
+interface Vxlan1
+   vxlan source-interface Loopback0
+   vxlan udp-port 4789
+   vxlan vlan 10 vni 10010
+   vxlan vlan 20 vni 10020
 !
 ip routing
 !
 router bgp 65500
-   router-id 10.255.1.3
-   neighbor UNDERLAY peer group
-   neighbor UNDERLAY remote-as 65500
-   neighbor UNDERLAY bfd
-   neighbor 10.0.0.4 peer group UNDERLAY
-   neighbor 10.0.0.132 peer group UNDERLAY
-   network 10.255.1.3/32
-   network 192.168.3.128/25
+   neighbor 10.255.0.1 remote-as 65500
+   neighbor 10.255.0.1 update-source Loopback0
+   neighbor 10.255.0.1 send-community extended
+   neighbor 10.255.0.2 remote-as 65500
+   neighbor 10.255.0.2 update-source Loopback0
+   neighbor 10.255.0.2 send-community extended
+   !
+   vlan 10
+      rd auto
+      route-target both 65500:10010
+      redistribute learned
+   !
+   vlan 20
+      rd auto
+      route-target both 65500:10020
+      redistribute learned
+   !
+   address-family evpn
+      neighbor 10.255.0.1 activate
+      neighbor 10.255.0.2 activate
 !
 router multicast
    ipv4
@@ -315,6 +397,10 @@ router multicast
    !
    ipv6
       software-forwarding kernel
+!
+router ospf 1
+   router-id 10.255.1.3
+   max-lsa 12000
 !
 end
 
@@ -344,19 +430,22 @@ system l1
    unsupported error-correction action error
 !
 interface Ethernet1
-   mtu 9194
    no switchport
    ip address 10.0.0.0/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
 !
 interface Ethernet2
-   mtu 9194
    no switchport
    ip address 10.0.0.2/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
 !
 interface Ethernet3
-   mtu 9194
    no switchport
    ip address 10.0.0.4/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
 !
 interface Ethernet4
 !
@@ -370,22 +459,30 @@ interface Ethernet8
 !
 interface Loopback0
    ip address 10.255.0.1/32
+   ip ospf area 0.0.0.0
 !
 interface Management1
 !
 ip routing
 !
 router bgp 65500
-   router-id 10.255.0.1
-   neighbor UNDERLAY peer group
-   neighbor UNDERLAY remote-as 65500
-   neighbor UNDERLAY next-hop-self
-   neighbor UNDERLAY bfd
-   neighbor UNDERLAY route-reflector-client
-   neighbor 10.0.0.1 peer group UNDERLAY
-   neighbor 10.0.0.3 peer group UNDERLAY
-   neighbor 10.0.0.5 peer group UNDERLAY
-   network 10.255.0.1/32
+   neighbor 10.255.1.1 remote-as 65500
+   neighbor 10.255.1.1 update-source Loopback0
+   neighbor 10.255.1.1 route-reflector-client
+   neighbor 10.255.1.1 send-community extended
+   neighbor 10.255.1.2 remote-as 65500
+   neighbor 10.255.1.2 update-source Loopback0
+   neighbor 10.255.1.2 route-reflector-client
+   neighbor 10.255.1.2 send-community extended
+   neighbor 10.255.1.3 remote-as 65500
+   neighbor 10.255.1.3 update-source Loopback0
+   neighbor 10.255.1.3 route-reflector-client
+   neighbor 10.255.1.3 send-community extended
+   !
+   address-family evpn
+      neighbor 10.255.1.1 activate
+      neighbor 10.255.1.2 activate
+      neighbor 10.255.1.3 activate
 !
 router multicast
    ipv4
@@ -393,6 +490,10 @@ router multicast
    !
    ipv6
       software-forwarding kernel
+!
+router ospf 1
+   router-id 10.255.0.1
+   max-lsa 12000
 !
 end
 
@@ -422,19 +523,22 @@ system l1
    unsupported error-correction action error
 !
 interface Ethernet1
-   mtu 9194
    no switchport
    ip address 10.0.0.128/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
 !
 interface Ethernet2
-   mtu 9194
    no switchport
    ip address 10.0.0.130/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
 !
 interface Ethernet3
-   mtu 9194
    no switchport
    ip address 10.0.0.132/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
 !
 interface Ethernet4
 !
@@ -448,22 +552,30 @@ interface Ethernet8
 !
 interface Loopback0
    ip address 10.255.0.2/32
+   ip ospf area 0.0.0.0
 !
 interface Management1
 !
 ip routing
 !
 router bgp 65500
-   router-id 10.255.0.2
-   neighbor UNDERLAY peer group
-   neighbor UNDERLAY remote-as 65500
-   neighbor UNDERLAY next-hop-self
-   neighbor UNDERLAY bfd
-   neighbor UNDERLAY route-reflector-client
-   neighbor 10.0.0.129 peer group UNDERLAY
-   neighbor 10.0.0.131 peer group UNDERLAY
-   neighbor 10.0.0.133 peer group UNDERLAY
-   network 10.255.0.2/32
+   neighbor 10.255.1.1 remote-as 65500
+   neighbor 10.255.1.1 update-source Loopback0
+   neighbor 10.255.1.1 route-reflector-client
+   neighbor 10.255.1.1 send-community extended
+   neighbor 10.255.1.2 remote-as 65500
+   neighbor 10.255.1.2 update-source Loopback0
+   neighbor 10.255.1.2 route-reflector-client
+   neighbor 10.255.1.2 send-community extended
+   neighbor 10.255.1.3 remote-as 65500
+   neighbor 10.255.1.3 update-source Loopback0
+   neighbor 10.255.1.3 route-reflector-client
+   neighbor 10.255.1.3 send-community extended
+   !
+   address-family evpn
+      neighbor 10.255.1.1 activate
+      neighbor 10.255.1.2 activate
+      neighbor 10.255.1.3 activate
 !
 router multicast
    ipv4
@@ -471,6 +583,10 @@ router multicast
    !
    ipv6
       software-forwarding kernel
+!
+router ospf 1
+   router-id 10.255.0.2
+   max-lsa 12000
 !
 end
 
