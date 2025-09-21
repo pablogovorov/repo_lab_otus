@@ -93,15 +93,6 @@ AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Li
 ```
 
 
-| Loopback0 | adrss | 
------- | ------ |
-Пул: | 10.255.0.0/20 |
-SP1: | 10.255.0.1/32 | 
-SP2: | 10.255.0.2/32 |
-LE1: | 10.255.1.1/32 |
-LE2: |10.255.1.2/32 |
-LE3: |10.255.1.3/32 |
-
 --------------------------
 
 | P2P-линки | adrss | линки |
