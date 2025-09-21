@@ -597,28 +597,21 @@ end
 
 ------------------------------------
 
-Проверка IP связанности (между L1 и L3)
+Проверка IP связанности (между клиентами за L1 и L3)
 ```
-Leaf1#ping 10.255.1.3 source loopback 0
-PING 10.255.1.3 (10.255.1.3) from 10.255.1.1 : 72(100) bytes of data.
-80 bytes from 10.255.1.3: icmp_seq=1 ttl=63 time=26.2 ms
-80 bytes from 10.255.1.3: icmp_seq=2 ttl=63 time=19.7 ms
-80 bytes from 10.255.1.3: icmp_seq=3 ttl=63 time=26.9 ms
-80 bytes from 10.255.1.3: icmp_seq=4 ttl=63 time=7.37 ms
-80 bytes from 10.255.1.3: icmp_seq=5 ttl=63 time=14.5 ms
+VPCS> ping 192.168.1.3
 
---- 10.255.1.3 ping statistics ---
-5 packets transmitted, 5 received, 0% packet loss, time 79ms
-rtt min/avg/max/mdev = 7.366/18.931/26.945/7.374 ms, pipe 3, ipg/ewma 19.863/22.216 ms
+84 bytes from 192.168.1.3 icmp_seq=1 ttl=64 time=26.316 ms
+84 bytes from 192.168.1.3 icmp_seq=2 ttl=64 time=12.450 ms
+84 bytes from 192.168.1.3 icmp_seq=3 ttl=64 time=21.750 ms
+84 bytes from 192.168.1.3 icmp_seq=4 ttl=64 time=21.260 ms
+84 bytes from 192.168.1.3 icmp_seq=5 ttl=64 time=24.637 ms
 
 
 ```
-Trace от Leaf1 до Leaf3
+Наличие VxLAN заголовка
 ```
-Leaf1#traceroute 10.255.1.3 source loopback 0
-traceroute to 10.255.1.3 (10.255.1.3), 30 hops max, 60 byte packets
- 1  10.0.0.128 (10.0.0.128)  13.981 ms  24.185 ms  24.782 ms
- 2  10.255.1.3 (10.255.1.3)  29.267 ms  36.954 ms  58.458 ms
+![Picture background](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab05/vxlan_header.jpg)
 
 ```
 
@@ -658,130 +651,12 @@ Source Codes:
 
 ```
 
-Вывод BGP Detail
-
-```
-Leaf1#show ip bgp detail
-BGP routing table information for VRF default
-Router identifier 10.255.1.1, local AS number 65500
-BGP routing table entry for 10.255.0.1/32
- Paths: 1 available
-  Local
-    10.0.0.0 from 10.0.0.0 (10.255.0.1)
-      Origin IGP, metric 0, localpref 100, IGP metric 0, weight 0, tag 0
-      Received 8d17h ago, valid, internal, best
-      Rx SAFI: Unicast
-BGP routing table entry for 10.255.0.2/32
- Paths: 1 available
-  Local
-    10.0.0.128 from 10.0.0.128 (10.255.0.2)
-      Origin IGP, metric 0, localpref 100, IGP metric 0, weight 0, tag 0
-      Received 8d17h ago, valid, internal, best
-      Rx SAFI: Unicast
-BGP routing table entry for 10.255.1.1/32
- Paths: 1 available
-  Local
-    - from - (10.255.1.1)
-      Origin IGP, metric -, localpref -, IGP metric -, weight 0, tag 0
-      Received 8d17h ago, valid, local, best, redistributed (Connected)
-      Rx SAFI: Unicast
-BGP routing table entry for 10.255.1.2/32
- Paths: 2 available
-  Local
-    10.0.0.128 from 10.0.0.128 (10.255.0.2)
-      Origin IGP, metric 0, localpref 100, IGP metric 0, weight 0, tag 0
-      Received 8d17h ago, valid, internal, ECMP head, ECMP, best, ECMP contributor
-      Originator: 10.255.1.2, Cluster list: 10.255.0.2
-      Rx SAFI: Unicast
-  Local
-    10.0.0.0 from 10.0.0.0 (10.255.0.1)
-      Origin IGP, metric 0, localpref 100, IGP metric 0, weight 0, tag 0
-      Received 8d17h ago, valid, internal, ECMP, ECMP contributor
-      Originator: 10.255.1.2, Cluster list: 10.255.0.1
-      Rx SAFI: Unicast
-BGP routing table entry for 10.255.1.3/32
- Paths: 2 available
-  Local
-    10.0.0.128 from 10.0.0.128 (10.255.0.2)
-      Origin IGP, metric 0, localpref 100, IGP metric 0, weight 0, tag 0
-      Received 8d17h ago, valid, internal, ECMP head, ECMP, best, ECMP contributor
-      Originator: 10.255.1.3, Cluster list: 10.255.0.2
-      Rx SAFI: Unicast
-  Local
-    10.0.0.0 from 10.0.0.0 (10.255.0.1)
-      Origin IGP, metric 0, localpref 100, IGP metric 0, weight 0, tag 0
-      Received 8d17h ago, valid, internal, ECMP, ECMP contributor
-      Originator: 10.255.1.3, Cluster list: 10.255.0.1
-      Rx SAFI: Unicast
-BGP routing table entry for 192.168.1.0/24
- Paths: 1 available
-  Local
-    - from - (10.255.1.1)
-      Origin IGP, metric -, localpref -, IGP metric -, weight 0, tag 0
-      Received 8d17h ago, valid, local, best, redistributed (Connected)
-      Rx SAFI: Unicast
-BGP routing table entry for 192.168.3.128/25
- Paths: 2 available
-  Local
-    10.0.0.0 from 10.0.0.0 (10.255.0.1)
-      Origin IGP, metric 0, localpref 100, IGP metric 0, weight 0, tag 0
-      Received 8d17h ago, valid, internal, ECMP head, ECMP, best, ECMP contributor
-      Originator: 10.255.1.3, Cluster list: 10.255.0.1
-      Rx SAFI: Unicast
-  Local
-    10.0.0.128 from 10.0.0.128 (10.255.0.2)
-      Origin IGP, metric 0, localpref 100, IGP metric 0, weight 0, tag 0
-      Received 8d17h ago, valid, internal, ECMP, ECMP contributor
-      Originator: 10.255.1.3, Cluster list: 10.255.0.2
-      Rx SAFI: Unicast
-
-```
-Префиксы от Spine2
-
-```
-Leaf1#show ip bgp neighbors 10.0.0.128 received-routes
-BGP routing table information for VRF default
-Router identifier 10.255.1.1, local AS number 65500
-Route status codes: s - suppressed contributor, * - valid, > - active, E - ECMP head, e - ECMP
-                    S - Stale, c - Contributing to ECMP, b - backup, L - labeled-unicast
-                    % - Pending best path selection
-Origin codes: i - IGP, e - EGP, ? - incomplete
-RPKI Origin Validation codes: V - valid, I - invalid, U - unknown
-AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
-
-          Network                Next Hop              Metric  AIGP       LocPref Weight  Path
- * >      10.255.0.2/32          10.0.0.128            -       -          100     -       i
- * >Ec    10.255.1.2/32          10.0.0.128            -       -          100     -       i Or-ID: 10.255.1.2 C-LST: 10.255.0.2
- * >Ec    10.255.1.3/32          10.0.0.128            -       -          100     -       i Or-ID: 10.255.1.3 C-LST: 10.255.0.2
- * >Ec    192.168.3.128/25       10.0.0.128            -       -          100     -       i Or-ID: 10.255.1.3 C-LST: 10.255.0.2
-
-
-```
-Прохождение PING и TRACE от хостов за Leaf3 до хостов за Leaf1
-
-```
-VPCS> ping 192.168.1.2
-
-84 bytes from 192.168.1.2 icmp_seq=1 ttl=61 time=11.965 ms
-84 bytes from 192.168.1.2 icmp_seq=2 ttl=61 time=17.757 ms
-84 bytes from 192.168.1.2 icmp_seq=3 ttl=61 time=38.127 ms
-84 bytes from 192.168.1.2 icmp_seq=4 ttl=61 time=22.907 ms
-84 bytes from 192.168.1.2 icmp_seq=5 ttl=61 time=26.081 ms
-
-
-VPCS> trace 192.168.1.2 -P 6
-trace to 192.168.1.2, 8 hops max (TCP), press Ctrl+C to stop
- 1   192.168.3.129   5.335 ms  3.262 ms  6.279 ms
- 2   10.0.0.4   11.140 ms  8.874 ms  15.980 ms
- 3   10.0.0.1   25.868 ms  15.004 ms  21.141 ms
- 4   192.168.1.2   21.370 ms  19.441 ms  13.565 ms
-
 
 
 ```
 
 
 
- [Конфиги устройств.txt](/labs/lab04/configs)
+ [Конфиги устройств.txt](/labs/lab05/configs)
 _______________________
-:fire: :star2: :alien: :boom: :metal: 
+:star: :rocket: :alien: :nerd_face: :sunny: 
