@@ -21,7 +21,7 @@ Underlay маршрутизация на основе OSPF. Overlay на осн�
 
 
 ## BGP peering между Leaf и Spine в AF l2vpn evpn
-
+'''
 Leaf1#show bgp summary
 BGP summary information for VRF default
 Router identifier 10.255.1.1, local AS number 65500
@@ -44,7 +44,7 @@ Neighbor            AS Session State AFI/SAFI                AFI/SAFI State   NL
 10.255.1.2       65500 Established   L2VPN EVPN              Negotiated              2          2
 10.255.1.3       65500 Established   IPv4 Unicast            Negotiated              0          0
 10.255.1.3       65500 Established   L2VPN EVPN              Negotiated              2          2
-
+'''
 
 | Loopback0 | adrss | 
 ------ | ------ |
