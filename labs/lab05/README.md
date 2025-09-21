@@ -597,7 +597,7 @@ end
 
 ------------------------------------
 
-Проверка IP связанности (между клиентами за L1 и L3)
+#Проверка IP связанности (между клиентами за L1 и L3)
 ```
 VPCS> ping 192.168.1.3
 
@@ -609,14 +609,14 @@ VPCS> ping 192.168.1.3
 
 
 ```
-Наличие VxLAN заголовка
-```
+#Наличие VxLAN заголовка
+
+
 ![Picture background](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab05/vxlan_header.jpg)
 
-```
 
 
-```
+---------
 
 
 
