@@ -15,15 +15,35 @@ ___
 ![Picture background](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab05/mytopology.jpg)
 
 
+## Реализация
+Underlay маршрутизация на основе OSPF. Overlay на основе iBGP все spine и leaf в одной AS 65500.
+Спайны работают в режиме RR.
+
+
 ## BGP peering между Leaf и Spine в AF l2vpn evpn
 
-Leaf1#show bgp evpn summary
--
-![Picture background](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab05/bgp_peer1.jpg)
+Leaf1#show bgp summary
+BGP summary information for VRF default
+Router identifier 10.255.1.1, local AS number 65500
+Neighbor            AS Session State AFI/SAFI                AFI/SAFI State   NLRI Rcd   NLRI Acc
+---------- ----------- ------------- ----------------------- -------------- ---------- ----------
+10.255.0.1       65500 Established   IPv4 Unicast            Negotiated              0          0
+10.255.0.1       65500 Established   L2VPN EVPN              Negotiated              7          7
+10.255.0.2       65500 Established   IPv4 Unicast            Negotiated              0          0
+10.255.0.2       65500 Established   L2VPN EVPN              Negotiated              7          7
 
-Spine1#show bgp evpn summary
--
-![Picture background](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab05/bgp_peer2.jpg)
+
+Spine1#show bgp summary
+BGP summary information for VRF default
+Router identifier 10.255.0.1, local AS number 65500
+Neighbor            AS Session State AFI/SAFI                AFI/SAFI State   NLRI Rcd   NLRI Acc
+---------- ----------- ------------- ----------------------- -------------- ---------- ----------
+10.255.1.1       65500 Established   IPv4 Unicast            Negotiated              0          0
+10.255.1.1       65500 Established   L2VPN EVPN              Negotiated              1          1
+10.255.1.2       65500 Established   IPv4 Unicast            Negotiated              0          0
+10.255.1.2       65500 Established   L2VPN EVPN              Negotiated              2          2
+10.255.1.3       65500 Established   IPv4 Unicast            Negotiated              0          0
+10.255.1.3       65500 Established   L2VPN EVPN              Negotiated              2          2
 
 
 | Loopback0 | adrss | 
