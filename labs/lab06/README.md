@@ -48,7 +48,7 @@ VPCS> ping 192.168.4.2
 84 bytes from 192.168.4.2 icmp_seq=1 ttl=62 time=59.886 ms  
 84 bytes from 192.168.4.2 icmp_seq=2 ttl=62 time=21.326 ms  
 ...
-[![](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/sym777req.jpg)](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/sym777req.jpg)
+[![](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/symm777req.jpg)](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/symm777req.jpg)
 [![](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/sym777rep.jpg)](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/sym777rep.jpg)
 
 -----------------------------
@@ -628,29 +628,10 @@ end
 
 ------------------------------------
 
-## Проверка IP связанности (между клиентами за L1 и L3)
-```
-VPCS> ping 192.168.1.3
-
-84 bytes from 192.168.1.3 icmp_seq=1 ttl=64 time=26.316 ms
-84 bytes from 192.168.1.3 icmp_seq=2 ttl=64 time=12.450 ms
-84 bytes from 192.168.1.3 icmp_seq=3 ttl=64 time=21.750 ms
-84 bytes from 192.168.1.3 icmp_seq=4 ttl=64 time=21.260 ms
-84 bytes from 192.168.1.3 icmp_seq=5 ttl=64 time=24.637 ms
-
-
-```
-## Наличие VxLAN заголовка
-
-
-![Picture background](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab05/vxlan_header.jpg)
 
 
 
----------
 
-
-
- [Конфиги устройств.txt](/labs/lab05/configs)
+ [Конфиги устройств.txt](/labs/lab06/configs)
 _______________________
-:star: :rocket: :alien: :nerd_face: :sunny: 
+:star: :rocket: :alien: :saruman: :sunny: 
