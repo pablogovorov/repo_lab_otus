@@ -4,3 +4,4 @@
     - [Лаба №3 ISIS](/labs/lab03)
     - [Лаба №4 BGP](/labs/lab04)
     - [Лаба №5 VxLAN. EVPN L2](/labs/lab05)
+    - [Лаба №6 VxLAN. EVPN L3](/labs/lab06)

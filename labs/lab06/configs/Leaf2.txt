@@ -1,0 +1,106 @@
+! Command: show running-config
+! device: Leaf2 (vEOS-lab, EOS-4.33.1F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+no aaa root
+!
+no service interface inactive port-id allocation disabled
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname Leaf2
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+vlan 10
+   name vlan10
+!
+vlan 20
+   name vlan20
+!
+interface Ethernet1
+   no switchport
+   ip address 10.0.0.3/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+!
+interface Ethernet2
+   no switchport
+   ip address 10.0.0.131/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+!
+interface Ethernet3
+   switchport access vlan 20
+!
+interface Ethernet4
+!
+interface Ethernet5
+!
+interface Ethernet6
+!
+interface Ethernet7
+!
+interface Ethernet8
+!
+interface Loopback0
+   ip address 10.255.1.2/32
+   ip ospf area 0.0.0.0
+!
+interface Management1
+!
+interface Vlan10
+   ip address 192.168.1.1/24
+!
+interface Vlan20
+   ip address 192.168.2.1/24
+!
+interface Vxlan1
+   vxlan source-interface Loopback0
+   vxlan udp-port 4789
+   vxlan vlan 10 vni 10010
+   vxlan vlan 20 vni 10020
+!
+ip routing
+!
+router bgp 65500
+   neighbor 10.255.0.1 remote-as 65500
+   neighbor 10.255.0.1 update-source Loopback0
+   neighbor 10.255.0.1 send-community extended
+   neighbor 10.255.0.2 remote-as 65500
+   neighbor 10.255.0.2 update-source Loopback0
+   neighbor 10.255.0.2 send-community extended
+   !
+   vlan 10
+      rd auto
+      route-target both 65500:10010
+      redistribute learned
+   !
+   vlan 20
+      rd auto
+      route-target both 65500:10020
+      redistribute learned
+   !
+   address-family evpn
+      neighbor 10.255.0.1 activate
+      neighbor 10.255.0.2 activate
+!
+router multicast
+   ipv4
+      software-forwarding kernel
+   !
+   ipv6
+      software-forwarding kernel
+!
+router ospf 1
+   router-id 10.255.1.2
+   max-lsa 12000
+!
+end
