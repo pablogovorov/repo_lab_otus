@@ -634,4 +634,4 @@ end
 
  [Конфиги устройств.txt](/labs/lab06/configs)
 _______________________
-:star: :rocket: :alien: :saruman: :sunny: 
+:musical_note: :heartbeat: :eyes: :saruman: :runner: 
