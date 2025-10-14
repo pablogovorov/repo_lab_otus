@@ -29,24 +29,24 @@ Underlay маршрутизация на основе OSPF. Overlay на осн�
 | 192.168.4.2   | VNI 777  | Vlan 40|
 
 
-Assymmetric IRB настроен между клиентами:
-192.168.1.2 (VNI 10010, VL10) и 192.168.2.2 (VNI 10020,VL20)
-VPCS> ping 192.168.2.2
+Assymmetric IRB настроен между клиентами:  
+192.168.1.2 (VNI 10010, VL10) и 192.168.2.2 (VNI 10020,VL20)  
+VPCS> ping 192.168.2.2  
 
-84 bytes from 192.168.2.2 icmp_seq=1 ttl=63 time=177.439 ms
-84 bytes from 192.168.2.2 icmp_seq=2 ttl=63 time=15.971 ms
+84 bytes from 192.168.2.2 icmp_seq=1 ttl=63 time=177.439 ms  
+84 bytes from 192.168.2.2 icmp_seq=2 ttl=63 time=15.971 ms  
 ...
 [![](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/assym10010.jpg)](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/assym10010.jpg)
 [![](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/assym10020.jpg)](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/assym10020.jpg)
 
 
 
-Symmetric IRB настроен между клиентам:
-192.168.3.2 (VNI777, VL30) и 192.168.4.2 (VNI777, VL40)
-VPCS> ping 192.168.4.2
+Symmetric IRB настроен между клиентам:  
+192.168.3.2 (VNI777, VL30) и 192.168.4.2 (VNI777, VL40)  
+VPCS> ping 192.168.4.2  
 
-84 bytes from 192.168.4.2 icmp_seq=1 ttl=62 time=59.886 ms
-84 bytes from 192.168.4.2 icmp_seq=2 ttl=62 time=21.326 ms
+84 bytes from 192.168.4.2 icmp_seq=1 ttl=62 time=59.886 ms  
+84 bytes from 192.168.4.2 icmp_seq=2 ttl=62 time=21.326 ms  
 ...
 [![](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/sym777req.jpg)](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/sym777req.jpg)
 [![](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/sym777rep.jpg)](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/sym777rep.jpg)
