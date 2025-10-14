@@ -49,7 +49,7 @@ VPCS> ping 192.168.4.2
 84 bytes from 192.168.4.2 icmp_seq=2 ttl=62 time=21.326 ms  
 ...
 [![](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/symm777req.jpg)](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/symm777req.jpg)
-[![](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/sym777rep.jpg)](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/sym777rep.jpg)
+[![](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/symm777rep.jpg)](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/symm777rep.jpg)
 
 -----------------------------
 
