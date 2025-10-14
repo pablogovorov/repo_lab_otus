@@ -51,37 +51,6 @@ VPCS> ping 192.168.4.2
 [![](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/sym777req.jpg)](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/sym777req.jpg)
 [![](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/sym777rep.jpg)](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/sym777rep.jpg)
 
-
-
-
-
-
-## BGP peering между Leaf и Spine в AF l2vpn evpn
-```
-Leaf1#show bgp summary
-BGP summary information for VRF default
-Router identifier 10.255.1.1, local AS number 65500
-Neighbor            AS Session State AFI/SAFI                AFI/SAFI State   NLRI Rcd   NLRI Acc
----------- ----------- ------------- ----------------------- -------------- ---------- ----------
-10.255.0.1       65500 Established   IPv4 Unicast            Negotiated              0          0
-10.255.0.1       65500 Established   L2VPN EVPN              Negotiated              7          7
-10.255.0.2       65500 Established   IPv4 Unicast            Negotiated              0          0
-10.255.0.2       65500 Established   L2VPN EVPN              Negotiated              7          7
-
-
-Spine1#show bgp summary
-BGP summary information for VRF default
-Router identifier 10.255.0.1, local AS number 65500
-Neighbor            AS Session State AFI/SAFI                AFI/SAFI State   NLRI Rcd   NLRI Acc
----------- ----------- ------------- ----------------------- -------------- ---------- ----------
-10.255.1.1       65500 Established   IPv4 Unicast            Negotiated              0          0
-10.255.1.1       65500 Established   L2VPN EVPN              Negotiated              1          1
-10.255.1.2       65500 Established   IPv4 Unicast            Negotiated              0          0
-10.255.1.2       65500 Established   L2VPN EVPN              Negotiated              2          2
-10.255.1.3       65500 Established   IPv4 Unicast            Negotiated              0          0
-10.255.1.3       65500 Established   L2VPN EVPN              Negotiated              2          2
-```
-
 -----------------------------
 
 ## Конфигурация устройств
