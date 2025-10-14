@@ -35,7 +35,7 @@ VPCS> ping 192.168.2.2
 
 84 bytes from 192.168.2.2 icmp_seq=1 ttl=63 time=177.439 ms  
 84 bytes from 192.168.2.2 icmp_seq=2 ttl=63 time=15.971 ms  
-...
+...  
 icmp request:
 [![](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/assym10020.jpg)](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/assym10020.jpg)
 icmp reply:
@@ -50,7 +50,7 @@ VPCS> ping 192.168.4.2
 
 84 bytes from 192.168.4.2 icmp_seq=1 ttl=62 time=59.886 ms  
 84 bytes from 192.168.4.2 icmp_seq=2 ttl=62 time=21.326 ms  
-...
+...  
 icmp request:
 [![](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/symm777req.jpg)](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/symm777req.jpg)
 icmp reply:
