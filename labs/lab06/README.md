@@ -634,4 +634,4 @@ end
 
  [Конфиги устройств.txt](/labs/lab06/configs)
 _______________________
-:musical_note: :heartbeat: :eyes: :saruman: :runner: 
+:musical_note: :heartbeat: :eyes: :umbrella: :cloud: 
