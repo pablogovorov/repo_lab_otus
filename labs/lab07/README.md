@@ -54,7 +54,8 @@ EVPN instance: VLAN 10
       Designated forwarder: 10.255.1.1
       Non-Designated forwarder: 10.255.1.2
 ```
-...  
+
+ 
 ping от 192.168.1.2 до 192.168.1.3:  
 [![](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab07/jpg/ping19216813.jpg)](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab07/jpg/ping19216813.jpg)
 
