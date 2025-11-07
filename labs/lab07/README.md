@@ -32,7 +32,6 @@ Underlay маршрутизация на основе OSPF. Overlay на осн�
 | 192.168.1.3   | VNI 10010 | Vlan 10 |
 
 
-
 __show bgp evpn instance:__  
 Leaf1#show bgp evpn instance
 EVPN instance: VLAN 10
