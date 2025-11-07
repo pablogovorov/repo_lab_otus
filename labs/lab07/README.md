@@ -53,6 +53,7 @@ EVPN instance: VLAN 10
       DF election algorithm: preference
       Designated forwarder: 10.255.1.1
       Non-Designated forwarder: 10.255.1.2
+```
 ...  
 icmp request:
 [![](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/ping19216813.jpg)](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/assym10020.jpg)
