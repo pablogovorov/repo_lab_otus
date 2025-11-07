@@ -55,7 +55,7 @@ EVPN instance: VLAN 10
       Non-Designated forwarder: 10.255.1.2
 ```
 ...  
-icmp request:
+icmp request:  
 [![](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab07/jpg/ping19216813.jpg)](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab07/jpg/ping19216813.jpg)
 icmp reply:
 [![](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/assym10010.jpg)](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/assym10010.jpg)
