@@ -57,8 +57,15 @@ EVPN instance: VLAN 10
 
  
 ping от 192.168.1.2 до 192.168.1.3:  
-[![](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab07/jpg/ping19216813.jpg)](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab07/jpg/ping19216813.jpg)
+```bash
+VPCS> ping 192.168.1.3
 
+84 bytes from 192.168.1.3 icmp_seq=1 ttl=64 time=63.171 ms
+84 bytes from 192.168.1.3 icmp_seq=2 ttl=64 time=24.103 ms
+84 bytes from 192.168.1.3 icmp_seq=3 ttl=64 time=22.191 ms
+84 bytes from 192.168.1.3 icmp_seq=4 ttl=64 time=22.909 ms
+84 bytes from 192.168.1.3 icmp_seq=5 ttl=64 time=22.402 ms
+```
 
 icmp reply:
 [![](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/assym10010.jpg)](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/assym10010.jpg)
