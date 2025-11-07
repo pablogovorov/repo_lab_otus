@@ -55,8 +55,10 @@ EVPN instance: VLAN 10
       Non-Designated forwarder: 10.255.1.2
 ```
 ...  
-icmp request:  
+ping от 192.168.1.2 до 192.168.1.3:  
 [![](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab07/jpg/ping19216813.jpg)](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab07/jpg/ping19216813.jpg)
+
+
 icmp reply:
 [![](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/assym10010.jpg)](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/assym10010.jpg)
 
@@ -85,6 +87,10 @@ icmp reply:
 <summary> Leaf1 </summary>
 
 ```
+! Command: show running-config
+! device: Leaf1 (vEOS-lab, EOS-4.33.1F)
+!
+! boot system flash:/vEOS-lab.swi
 !
 no aaa root
 !
@@ -105,13 +111,15 @@ system l1
 vlan 10
    name vlan10
 !
-vlan 20
-   name vlan20
-!
-vlan 30
-   name vlan30
-!
-vrf instance VRF-IRB1
+interface Port-Channel100
+   switchport trunk allowed vlan 10
+   switchport mode trunk
+   !
+   evpn ethernet-segment
+      identifier 0000:0000:0000:0000:0001
+      designated-forwarder election algorithm preference 200
+      route-target import 00:00:00:00:00:01
+   lacp system-id 0000.0000.0001
 !
 interface Ethernet1
    no switchport
@@ -126,10 +134,10 @@ interface Ethernet2
    ip ospf area 0.0.0.0
 !
 interface Ethernet3
-   switchport access vlan 10
+   switchport mode trunk
+   channel-group 100 mode active
 !
 interface Ethernet4
-   switchport access vlan 30
 !
 interface Ethernet5
 !
@@ -146,27 +154,15 @@ interface Loopback0
 interface Management1
 !
 interface Vlan10
-   ip address 192.168.1.1/24
-!
-interface Vlan20
-   ip address 192.168.2.1/24
-!
-interface Vlan30
-   vrf VRF-IRB1
-   ip address virtual 192.168.3.1/24
 !
 interface Vxlan1
    vxlan source-interface Loopback0
    vxlan udp-port 4789
    vxlan vlan 10 vni 10010
-   vxlan vlan 20 vni 10020
-   vxlan vrf VRF-IRB1 vni 777
 !
 ip routing
-ip routing vrf VRF-IRB1
 !
 router bgp 65500
-   router-id 10.255.1.1
    neighbor 10.255.0.1 remote-as 65500
    neighbor 10.255.0.1 update-source Loopback0
    neighbor 10.255.0.1 send-community extended
@@ -179,25 +175,9 @@ router bgp 65500
       route-target both 65500:10010
       redistribute learned
    !
-   vlan 20
-      rd auto
-      route-target both 65500:10020
-      redistribute learned
-   !
-   vlan 30
-      rd auto
-      route-target both 65500:10030
-      redistribute learned
-   !
    address-family evpn
       neighbor 10.255.0.1 activate
       neighbor 10.255.0.2 activate
-   !
-   vrf VRF-IRB1
-      rd 10.255.1.1:777
-      route-target import evpn 65500:777
-      route-target export evpn 65500:777
-      network 192.168.3.0/24
 !
 router multicast
    ipv4
@@ -221,6 +201,10 @@ end
 <summary> Leaf2  </summary>
 
 ```
+! Command: show running-config
+! device: Leaf2 (vEOS-lab, EOS-4.33.1F)
+!
+! boot system flash:/vEOS-lab.swi
 !
 no aaa root
 !
@@ -241,8 +225,16 @@ system l1
 vlan 10
    name vlan10
 !
-vlan 20
-   name vlan20
+interface Port-Channel100
+   description "ESI-LAG to Server"
+   switchport trunk allowed vlan 10
+   switchport mode trunk
+   !
+   evpn ethernet-segment
+      identifier 0000:0000:0000:0000:0001
+      designated-forwarder election algorithm preference 100
+      route-target import 00:00:00:00:00:01
+   lacp system-id 0000.0000.0001
 !
 interface Ethernet1
    no switchport
@@ -257,7 +249,9 @@ interface Ethernet2
    ip ospf area 0.0.0.0
 !
 interface Ethernet3
-   switchport access vlan 20
+   description "To Server"
+   switchport mode trunk
+   channel-group 100 mode active
 !
 interface Ethernet4
 !
@@ -276,16 +270,11 @@ interface Loopback0
 interface Management1
 !
 interface Vlan10
-   ip address 192.168.1.1/24
-!
-interface Vlan20
-   ip address 192.168.2.1/24
 !
 interface Vxlan1
    vxlan source-interface Loopback0
    vxlan udp-port 4789
    vxlan vlan 10 vni 10010
-   vxlan vlan 20 vni 10020
 !
 ip routing
 !
@@ -300,11 +289,6 @@ router bgp 65500
    vlan 10
       rd auto
       route-target both 65500:10010
-      redistribute learned
-   !
-   vlan 20
-      rd auto
-      route-target both 65500:10020
       redistribute learned
    !
    address-family evpn
@@ -324,6 +308,7 @@ router ospf 1
 !
 end
 
+
 ```
 </details>
 <details> 
@@ -331,6 +316,10 @@ end
 <summary> Leaf3 </summary>
 
 ```
+! Command: show running-config
+! device: Leaf3 (vEOS-lab, EOS-4.33.1F)
+!
+! boot system flash:/vEOS-lab.swi
 !
 no aaa root
 !
@@ -351,14 +340,6 @@ system l1
 vlan 10
    name vlan10
 !
-vlan 20
-   name vlan20
-!
-vlan 40
-   name vlan40
-!
-vrf instance VRF-IRB1
-!
 interface Ethernet1
    no switchport
    ip address 10.0.0.5/31
@@ -375,7 +356,6 @@ interface Ethernet3
    switchport access vlan 10
 !
 interface Ethernet4
-   switchport access vlan 40
 !
 interface Ethernet5
 !
@@ -391,28 +371,14 @@ interface Loopback0
 !
 interface Management1
 !
-interface Vlan10
-   ip address 192.168.1.1/24
-!
-interface Vlan20
-   ip address 192.168.2.1/24
-!
-interface Vlan40
-   vrf VRF-IRB1
-   ip address virtual 192.168.4.1/24
-!
 interface Vxlan1
    vxlan source-interface Loopback0
    vxlan udp-port 4789
    vxlan vlan 10 vni 10010
-   vxlan vlan 20 vni 10020
-   vxlan vrf VRF-IRB1 vni 777
 !
 ip routing
-ip routing vrf VRF-IRB1
 !
 router bgp 65500
-   router-id 10.255.1.3
    neighbor 10.255.0.1 remote-as 65500
    neighbor 10.255.0.1 update-source Loopback0
    neighbor 10.255.0.1 send-community extended
@@ -425,25 +391,9 @@ router bgp 65500
       route-target both 65500:10010
       redistribute learned
    !
-   vlan 20
-      rd auto
-      route-target both 65500:10020
-      redistribute learned
-   !
-   vlan 40
-      rd auto
-      route-target both 65500:10040
-      redistribute learned
-   !
    address-family evpn
       neighbor 10.255.0.1 activate
       neighbor 10.255.0.2 activate
-   !
-   vrf VRF-IRB1
-      rd 10.255.1.3:777
-      route-target import evpn 65500:777
-      route-target export evpn 65500:777
-      network 192.168.4.0/24
 !
 router multicast
    ipv4
@@ -459,6 +409,71 @@ router ospf 1
 end
 
 
+
+```
+</details>
+
+<details> 
+<summary> multih-sw </summary>
+
+! Command: show running-config
+! device: multih-sw (vEOS-lab, EOS-4.33.1F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+no aaa root
+!
+no service interface inactive port-id allocation disabled
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname multih-sw
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+vlan 10
+   name vlan10
+!
+interface Port-Channel100
+   description "Server to ESI-LAG"
+   switchport mode trunk
+!
+interface Ethernet1
+   description "to esi-sw"
+   switchport mode trunk
+   channel-group 100 mode active
+!
+interface Ethernet2
+   description "to esi-sw"
+   switchport mode trunk
+   channel-group 100 mode active
+!
+interface Ethernet3
+   switchport access vlan 10
+!
+interface Ethernet4
+!
+interface Management1
+!
+no ip routing
+!
+router multicast
+   ipv4
+      software-forwarding kernel
+   !
+   ipv6
+      software-forwarding kernel
+!
+end
+
+
+
 ```
 </details>
 <details> 
@@ -466,6 +481,10 @@ end
 
 
 ```
+! Command: show running-config
+! device: Spine1 (vEOS-lab, EOS-4.33.1F)
+!
+! boot system flash:/vEOS-lab.swi
 !
 no aaa root
 !
@@ -552,6 +571,7 @@ router ospf 1
 end
 
 
+
 ```
 </details>
 <details> 
@@ -559,6 +579,10 @@ end
 
 
 ```
+! Command: show running-config
+! device: Spine2 (vEOS-lab, EOS-4.33.1F)
+!
+! boot system flash:/vEOS-lab.swi
 !
 no aaa root
 !
@@ -643,6 +667,7 @@ router ospf 1
    max-lsa 12000
 !
 end
+
 
 
 
