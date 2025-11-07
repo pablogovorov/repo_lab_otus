@@ -56,7 +56,7 @@ EVPN instance: VLAN 10
 ```
 
  
-ping от 192.168.1.2 до 192.168.1.3:  
+**ping от 192.168.1.2 до 192.168.1.3:**
 ```bash
 VPCS> ping 192.168.1.3
 
@@ -67,8 +67,7 @@ VPCS> ping 192.168.1.3
 84 bytes from 192.168.1.3 icmp_seq=5 ttl=64 time=22.402 ms
 ```
 
-icmp reply:
-[![](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/assym10010.jpg)](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/assym10010.jpg)
+**Проверка пинга при обрыве одного из линков в сторону Leaf1 или Leaf**
 
 
 
