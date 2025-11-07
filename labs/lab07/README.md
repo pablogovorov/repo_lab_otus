@@ -415,7 +415,9 @@ end
 
 <details> 
 <summary> multih-sw </summary>
+
 ```
+
 ! Command: show running-config
 ! device: multih-sw (vEOS-lab, EOS-4.33.1F)
 !
@@ -476,6 +478,7 @@ end
 
 ```
 </details>
+
 <details> 
 <summary> Spine 1 </summary>
 
