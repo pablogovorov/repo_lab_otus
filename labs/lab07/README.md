@@ -31,8 +31,9 @@ Underlay маршрутизация на основе OSPF. Overlay на осн�
 | 192.168.1.2   | VNI 10010 | Vlan 10 |
 | 192.168.1.3   | VNI 10010 | Vlan 10 |
 
+**Показать информацию о BGP EVPN instance:**
 
-__show bgp evpn instance:__  
+```bash
 Leaf1#show bgp evpn instance
 EVPN instance: VLAN 10
   Route distinguisher: 10.255.1.1:10
@@ -52,7 +53,6 @@ EVPN instance: VLAN 10
       DF election algorithm: preference
       Designated forwarder: 10.255.1.1
       Non-Designated forwarder: 10.255.1.2
-
 ...  
 icmp request:
 [![](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/ping19216813.jpg)](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/assym10020.jpg)
