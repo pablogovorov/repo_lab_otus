@@ -33,12 +33,27 @@ Underlay маршрутизация на основе OSPF. Overlay на осн�
 
 
 
-__Assymmetric IRB настроен между клиентами:__  
-192.168.1.2 (VNI 10010, VL10) и 192.168.2.2 (VNI 10020,VL20)  
-VPCS> ping 192.168.2.2  
+__show bgp evpn instance:__  
+Leaf1#show bgp evpn instance
+EVPN instance: VLAN 10
+  Route distinguisher: 10.255.1.1:10
+  Route target import: Route-Target-AS:65500:10010
+  Route target export: Route-Target-AS:65500:10010
+  Service interface: VLAN-based
+  Local VXLAN IP address: 10.255.1.1
+  VXLAN: enabled
+  MPLS: disabled
+  Local ethernet segment:
+    ESI: 0000:0000:0000:0000:0001
+      Type: 0 (administratively configured)
+      Interface: Port-Channel100
+      Mode: all-active
+      State: up
+      ES-Import RT: 00:00:00:00:00:01
+      DF election algorithm: preference
+      Designated forwarder: 10.255.1.1
+      Non-Designated forwarder: 10.255.1.2
 
-84 bytes from 192.168.2.2 icmp_seq=1 ttl=63 time=177.439 ms  
-84 bytes from 192.168.2.2 icmp_seq=2 ttl=63 time=15.971 ms  
 ...  
 icmp request:
 [![](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/assym10020.jpg)](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/assym10020.jpg)
@@ -641,6 +656,6 @@ end
 
 
 
- [Конфиги устройств.txt](/labs/lab06/configs)
+ [Конфиги устройств.txt](/labs/lab07/configs)
 _______________________
 :musical_note: :heartbeat: :eyes: :umbrella: :cloud: 
