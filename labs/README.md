@@ -5,3 +5,4 @@
     - [Лаба №4 BGP](/labs/lab04)
     - [Лаба №5 VxLAN. EVPN L2](/labs/lab05)
     - [Лаба №6 VxLAN. EVPN L3](/labs/lab06)
+    - [Лаба №6 VxLAN. Multihoming](/labs/lab07)
