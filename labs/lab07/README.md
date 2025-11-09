@@ -67,7 +67,7 @@ VPCS> ping 192.168.1.3
 84 bytes from 192.168.1.3 icmp_seq=5 ttl=64 time=22.402 ms
 ```
 
-**Проверка пинга при обрыве одного из линков в сторону Leaf1 или Leaf2**
+**Проверка пинга при обрыве одного из линков на Leaf1 или Leaf2**
 
 Пинг идёт через Leaf1:
 [![](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab07/jpg/pingl1.jpg)](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab07/jpg/pingl1.jpg)  
