@@ -784,4 +784,4 @@ end
 
  [Конфиги устройств.txt](/labs/lab07/configs)
 _______________________
-:musical_note: :heartbeat: :eyes: :umbrella: :cloud: 
+:🔨: :heartbeat: :eyes: :umbrella: :🚀: 
