@@ -69,20 +69,111 @@ VPCS> ping 192.168.1.3
 
 **Проверка пинга при обрыве одного из линков в сторону Leaf1 или Leaf2**
 
+Пинг идёт через Leaf1:
+[![](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab07/jpg/pingl1.jpg)](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab07/jpg/pingl1.jpg)  
+
+после обрыва линка пинг проходит через Leaf2  
+
+[![](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab07/jpg/pingl2.jpg)](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab07/jpg/pingl2.jpg)
+
+**Проверка EVPN маршрутов для данного ESI**
+
+```bash
+Leaf1#show bgp evpn route-type auto-discovery
+BGP routing table information for VRF default
+Router identifier 10.255.1.1, local AS number 65500
+Route status codes: * - valid, > - active, S - Stale, E - ECMP head, e - ECMP
+                    c - Contributing to ECMP, % - Pending best path selection
+Origin codes: i - IGP, e - EGP, ? - incomplete
+AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
+
+          Network                Next Hop              Metric  LocPref Weight  Path
+ * >      RD: 10.255.1.1:10 auto-discovery 0 0000:0000:0000:0000:0001
+                                 -                     -       -       0       i
+ * >Ec    RD: 10.255.1.2:10 auto-discovery 0 0000:0000:0000:0000:0001
+                                 10.255.1.2            -       100     0       i Or-ID: 10.255.1.2 C-LST: 10.255.0.1
+ *  ec    RD: 10.255.1.2:10 auto-discovery 0 0000:0000:0000:0000:0001
+                                 10.255.1.2            -       100     0       i Or-ID: 10.255.1.2 C-LST: 10.255.0.2
+ * >      RD: 10.255.1.1:1 auto-discovery 0000:0000:0000:0000:0001
+                                 -                     -       -       0       i
+ * >Ec    RD: 10.255.1.2:1 auto-discovery 0000:0000:0000:0000:0001
+                                 10.255.1.2            -       100     0       i Or-ID: 10.255.1.2 C-LST: 10.255.0.1
+ *  ec    RD: 10.255.1.2:1 auto-discovery 0000:0000:0000:0000:0001
+                                 10.255.1.2            -       100     0       i Or-ID: 10.255.1.2 C-LST: 10.255.0.2
+
+```
+
+**Проверка Designated Forwarder (DF)**
 
 
+```bash
+Leaf2#show bgp evpn esi 0000:0000:0000:0000:0001 detail
+BGP routing table information for VRF default
+Router identifier 10.255.1.2, local AS number 65500
+BGP routing table entry for auto-discovery 0 0000:0000:0000:0000:0001, Route Distinguisher: 10.255.1.1:10
+ Paths: 2 available
+  Local
+    10.255.1.1 from 10.255.0.2 (10.255.0.2)
+      Origin IGP, metric -, localpref 100, weight 0, tag 0, valid, internal, ECMP head, ECMP, best, ECMP contributor
+      Originator: 10.255.1.1, Cluster list: 10.255.0.2
+      Extended Community: Route-Target-AS:65500:10010 TunnelEncap:tunnelTypeVxlan
+      VNI: 10010
+  Local
+    10.255.1.1 from 10.255.0.1 (10.255.0.1)
+      Origin IGP, metric -, localpref 100, weight 0, tag 0, valid, internal, ECMP, ECMP contributor
+      Originator: 10.255.1.1, Cluster list: 10.255.0.1
+      Extended Community: Route-Target-AS:65500:10010 TunnelEncap:tunnelTypeVxlan
+      VNI: 10010
+BGP routing table entry for auto-discovery 0 0000:0000:0000:0000:0001, Route Distinguisher: 10.255.1.2:10
+ Paths: 1 available
+  Local
+    - from - (0.0.0.0)
+      Origin IGP, metric -, localpref -, weight 0, tag 0, valid, local, best
+      Extended Community: Route-Target-AS:65500:10010 TunnelEncap:tunnelTypeVxlan
+      VNI: 10010
+BGP routing table entry for auto-discovery 0000:0000:0000:0000:0001, Route Distinguisher: 10.255.1.1:1
+ Paths: 2 available, Priority: high
+  Local
+    10.255.1.1 from 10.255.0.1 (10.255.0.1)
+      Origin IGP, metric -, localpref 100, weight 0, tag 0, valid, internal, ECMP head, ECMP, best, ECMP contributor
+      Originator: 10.255.1.1, Cluster list: 10.255.0.1
+      Extended Community: Route-Target-AS:65500:10010 TunnelEncap:tunnelTypeVxlan EvpnEsiLabel:0
+      VNI: 0
+  Local
+    10.255.1.1 from 10.255.0.2 (10.255.0.2)
+      Origin IGP, metric -, localpref 100, weight 0, tag 0, valid, internal, ECMP, ECMP contributor
+      Originator: 10.255.1.1, Cluster list: 10.255.0.2
+      Extended Community: Route-Target-AS:65500:10010 TunnelEncap:tunnelTypeVxlan EvpnEsiLabel:0
+      VNI: 0
+BGP routing table entry for auto-discovery 0000:0000:0000:0000:0001, Route Distinguisher: 10.255.1.2:1
+ Paths: 1 available, Priority: high
+  Local
+    - from - (0.0.0.0)
+      Origin IGP, metric -, localpref -, weight 0, tag 0, valid, local, best
+      Extended Community: Route-Target-AS:65500:10010 TunnelEncap:tunnelTypeVxlan EvpnEsiLabel:0
+BGP routing table entry for ethernet-segment 0000:0000:0000:0000:0001 10.255.1.1, Route Distinguisher: 10.255.1.1:1
+ Paths: 2 available
+  Local
+    10.255.1.1 from 10.255.0.1 (10.255.0.1)
+      Origin IGP, metric -, localpref 100, weight 0, tag 0, valid, internal, ECMP head, ECMP, best, ECMP contributor
+      Originator: 10.255.1.1, Cluster list: 10.255.0.1
+      Extended Community: TunnelEncap:tunnelTypeVxlan EvpnEsImportRt:00:00:00:00:00:01 DF Election: Preference 200
+  Local
+    10.255.1.1 from 10.255.0.2 (10.255.0.2)
+      Origin IGP, metric -, localpref 100, weight 0, tag 0, valid, internal, ECMP, ECMP contributor
+      Originator: 10.255.1.1, Cluster list: 10.255.0.2
+      Extended Community: TunnelEncap:tunnelTypeVxlan EvpnEsImportRt:00:00:00:00:00:01 DF Election: Preference 200
+BGP routing table entry for ethernet-segment 0000:0000:0000:0000:0001 10.255.1.2, Route Distinguisher: 10.255.1.2:1
+ Paths: 1 available
+  Local
+    - from - (0.0.0.0)
+      Origin IGP, metric -, localpref -, weight 0, tag 0, valid, local, best
+      Extended Community: TunnelEncap:tunnelTypeVxlan EvpnEsImportRt:00:00:00:00:00:01 DF Election: Preference 100
 
-__Symmetric IRB настроен между клиентам:__  
-192.168.3.2 (VNI777, VL30) и 192.168.4.2 (VNI777, VL40)  
-VPCS> ping 192.168.4.2  
 
-84 bytes from 192.168.4.2 icmp_seq=1 ttl=62 time=59.886 ms  
-84 bytes from 192.168.4.2 icmp_seq=2 ttl=62 time=21.326 ms  
-...  
-icmp request:
-[![](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/symm777req.jpg)](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/symm777req.jpg)
-icmp reply:
-[![](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/symm777rep.jpg)](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab06/jpg/symm777rep.jpg)
+```
+
+
 
 -----------------------------
 
