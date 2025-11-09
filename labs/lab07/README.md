@@ -76,7 +76,7 @@ VPCS> ping 192.168.1.3
 
 [![](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab07/jpg/pingl2.jpg)](https://github.com/pablogovorov/repo_lab_otus/blob/main/labs/lab07/jpg/pingl2.jpg)
 
-**Проверка EVPN маршрутов для данного ESI**
+**Проверка EVPN маршрутов Type-1 для данного ESI**
 
 ```bash
 Leaf1#show bgp evpn route-type auto-discovery
